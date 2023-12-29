@@ -1,0 +1,27 @@
+
+const createServer = require('./src/app.js')
+const studentsRoute = require('./src/routes/students.route.js')
+const authRoute = require('./src/routes/auth.route.js')
+const majorsRoute = require('./src/routes/majors.route.js')
+const responsesRoute = require('./src/routes/responses.route.js')
+const questionsRoute = require('./src/routes/questions.route.js')
+const examsRoute = require('./src/routes/exams.route.js')
+const errorMiddleware = require('./src/middlewares/error.middleware.js')
+
+
+const app = createServer();
+
+app.use("/api", authRoute);
+app.use("/api/students", studentsRoute);
+app.use("/api/responses", responsesRoute);
+app.use("/api/questions", questionsRoute);
+app.use("/api/exams", examsRoute);
+app.use("/api/majors", majorsRoute);
+app.use(errorMiddleware);
+
+process.on('unhandledRejection', (err, promise) => {
+    console.log(err);
+    process.exit(1);
+});
+
+
