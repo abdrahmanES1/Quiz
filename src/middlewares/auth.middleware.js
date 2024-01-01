@@ -37,5 +37,13 @@ const authorize = (...roles) => {
         next();
     }
 }
+const authorizeTeacher = (...roles) => {
+    return async (req, res, next) => {
+        if (!roles.includes(req.teacher.role)) {
+            return next(new HttpError(`${req.teacher.role} role is not authorized to access this route`, 403))
+        }
+        next();
+    }
+}
 
 module.exports = { enableProtection, authorize }
