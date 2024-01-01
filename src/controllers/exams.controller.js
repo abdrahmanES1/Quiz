@@ -1,8 +1,8 @@
 
 const asyncHandler = require('express-async-handler');
 const Exam = require('../models/exams.model');
-const Question = require("../models/questions.model")
-const Response = require("../models/responses.model")
+const Question = require("../models/questions.model");
+const Major = require("../models/majors.model");
 const NotFoundError = require("../../Errors/NotFoundError");
 const { StatusCodes } = require('http-status-codes');
 
@@ -10,12 +10,8 @@ const getAllExams = asyncHandler(async (req, res, next) => {
 
     const { populate, min ,max } = req.query;
     
-    // let query = {}
-    // if (min) query.score = { $gte: min };
-    // if (max) query.score = { $lte: max };
-
     const exams = await Exam.find({}).populate(populate);    
-    res.status(200).json({
+    res.status(StatusCodes.OK).json({
         success: true,
         exams
     });
@@ -68,17 +64,24 @@ const modifyExam = asyncHandler(async (req, res, next) => {
 });
 
 const addExam = asyncHandler(async (req,res,next) => {
-    const { name, description } = req.body;
+    const { name, description, major } = req.body;
+
+    if(!await Major.findById(major)){
+        return next(new NotFoundError("No major found match this id : " + exam));
+    }
 
     const exam = new Exam({ 
         name : name,
         description : description,
+        major : major
     })          
     
     await exam.save();
 
-    // const question = await Question.create({ email, password, firstname, lastname })
+    const wantedMajor = await Major.findById(major);
+    wantedMajor.exams.push(exam._id);
 
+    wantedMajor.save();
     res.status(StatusCodes.OK).json({ 
         success: true, 
         message: 'Exam added successfully', 
