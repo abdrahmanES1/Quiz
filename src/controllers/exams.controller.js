@@ -8,12 +8,12 @@ const NotFoundError = require("../../Errors/NotFoundError");
 const getAllExams = asyncHandler(async (req, res, next) => {
     try {
         const { populate, min ,max } = req.query;
-        let query = {}
-        if (min) query.score = { $gte: min };
-        if (max) query.score = { $lte: max };
+        
+        // let query = {}
+        // if (min) query.score = { $gte: min };
+        // if (max) query.score = { $lte: max };
     
-        const exams = await Exam.find(query).populate(populate); 
-    
+        const exams = await Exam.find({}).populate(populate);    
         res.status(200).json({
           success: true,
           exams
@@ -62,8 +62,7 @@ const modifyExam = asyncHandler(async (req, res, next) => {
         return next(new NotFoundError('Exam not found'));
     }
 
-    await Exam.updateOne({ "_id": id }, { $set: { "name": name , "description" : description} });
-
+    await Exam.updateOne({ "_id": id }, { name, description });
     res.status(200).json({
         success: true,
         message: 'Exam updated successfully',
