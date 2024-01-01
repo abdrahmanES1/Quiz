@@ -5,7 +5,7 @@ const {authorize} = require("../middlewares/auth.middleware");
 const route = Router();
 
 route.get('', getAllQuestions);
-route.post('/add', authorize,addQuestion);
+route.post('/add',addQuestion);
 route.get('/:id', getQuestion);
 route.put('/:id', modifyQuestion);
 route.delete('/:id', deleteQuestion);

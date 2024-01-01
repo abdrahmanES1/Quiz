@@ -5,7 +5,7 @@ const { getAllResponses, getRespons, modifyRespons, deleteRespons, addResponse} 
 const route = Router();
 
 route.get('', getAllResponses);
-route.post('', addResponse);
+route.post('/add', addResponse);
 route.get('/:id', getRespons);
 route.put('/:id', modifyRespons);
 route.delete('/:id', deleteRespons);
