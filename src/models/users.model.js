@@ -22,7 +22,7 @@ const UserSchema = new Schema({
         select: false
     },
     major: { type: Schema.ObjectId, ref: 'Major' },
-    role: { type: String, enum:[...Roles], required: [true, 'Please provide a role'] }
+    role: { type: String, enum:[Roles.STUDENT,Roles.TEACHER, Roles.ADMIN,Roles.SUPER_ADMIN], required: [true, 'Please provide a role'] }
 }, { timestamps: true })
 
 
