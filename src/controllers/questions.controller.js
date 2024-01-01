@@ -2,13 +2,18 @@
 const asyncHandler = require('express-async-handler');
 const Question = require('../models/questions.model');
 const NotFoundError = require("../../Errors/NotFoundError");
+const BadRequestError = require("../../Errors/BadRequestError");
 const Response = require("../models/responses.model")
 const { StatusCodes } = require('http-status-codes');
+const mongoose = require('mongoose');
+const Exam = require("../models/exams.model");
+
 
 
 const getAllQuestions = asyncHandler(async (req, res, next) => {
     try {
         const { populate, min ,max } = req.query;
+        
         
         const questions = await Question.find({}).populate(populate);    
         res.status(StatusCodes.OK).json({
@@ -65,6 +70,10 @@ const modifyQuestion = asyncHandler(async (req, res, next) => {
 const addQuestion = asyncHandler(async (req,res,next) => {
     const { name, description, exam } = req.body;
 
+    if(!await Exam.findById(exam)){
+        return next(new NotFoundError("No exam found match this id : ",exam));
+    }
+    
     const question = new Question({ 
         name : name,
         description : description,
@@ -73,8 +82,10 @@ const addQuestion = asyncHandler(async (req,res,next) => {
     
     await question.save();
 
-    // const question = await Question.create({ email, password, firstname, lastname })
+    const wantedExam = await Exam.findById(exam);
+    wantedExam.questions.push(question._id);
 
+    wantedExam.save();
     res.status(StatusCodes.OK).json({
         success: true,
         message: 'Question added successfully',

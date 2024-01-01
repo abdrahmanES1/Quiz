@@ -1,6 +1,7 @@
 
 const asyncHandler = require('express-async-handler');
 const Respons = require('../models/responses.model');
+const Question = require("../models/questions.model")
 const { StatusCodes } = require('http-status-codes');
 
 const getAllResponses = asyncHandler(async (req, res, next) => {
@@ -58,6 +59,9 @@ const modifyRespons = asyncHandler(async (req, res, next) => {
 const addResponse = asyncHandler(async (req,res,next) => {
     const { name, description, question, value } = req.body;
 
+    if(!await Question.findById(question)){
+        return next(new NotFoundError("No question found match this id : ",exam));
+    }
     const response = new Respons({ 
         name : name,
         description : description,
@@ -66,7 +70,10 @@ const addResponse = asyncHandler(async (req,res,next) => {
     })          
     
     await response.save();
+    const wantedQuestion = await Question.findById(question);
+    wantedQuestion.responses.push(response._id);
 
+    wantedQuestion.save();
 
     res.status(StatusCodes.OK).json({
         success: true,
