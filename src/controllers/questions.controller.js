@@ -71,7 +71,7 @@ const addQuestion = asyncHandler(async (req,res,next) => {
     const { name, description, exam } = req.body;
 
     if(!await Exam.findById(exam)){
-        return next(new NotFoundError("No exam found match this id : ",exam));
+        return next(new NotFoundError("No exam found match this id : " + exam));
     }
     
     const question = new Question({ 
