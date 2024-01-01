@@ -1,7 +1,7 @@
 
 const Router = require('express').Router;
 const { getAllQuestions, getQuestion, modifyQuestion, deleteQuestion, addQuestion} = require('../controllers/questions.controller');
-const authorize = require("../middlewares/auth.middleware");
+const {authorize} = require("../middlewares/auth.middleware");
 const route = Router();
 
 route.get('', getAllQuestions);

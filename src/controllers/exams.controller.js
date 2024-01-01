@@ -69,9 +69,25 @@ const modifyExam = asyncHandler(async (req, res, next) => {
       });
 });
 
+const addExam = asyncHandler(async (req,res,next) => {
+    const { name, description } = req.body;
+
+    const exam = new Exam({ 
+        name : name,
+        description : description,
+    })          
+    
+    await exam.save();
+
+    // const question = await Question.create({ email, password, firstname, lastname })
+
+    res.status(200).json({
+        success: true,
+        message: 'Exam added successfully',
+      });
+});
 
 
-
-module.exports = { getAllExams, getExam, deleteExam, modifyExam };
+module.exports = { getAllExams, getExam, deleteExam, modifyExam, addExam };
     
     

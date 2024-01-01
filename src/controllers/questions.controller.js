@@ -16,7 +16,7 @@ const getAllQuestions = asyncHandler(async (req, res, next) => {
         });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Error fetching exams' });
+        res.status(500).json({ message: 'Error fetching questions' });
     }
 })
 
