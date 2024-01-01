@@ -1,20 +1,18 @@
 
 const asyncHandler = require('express-async-handler');
 const Respons = require('../models/responses.model');
+const { StatusCodes } = require('http-status-codes');
 
 const getAllResponses = asyncHandler(async (req, res, next) => {
-    try {
-        const { populate, min ,max } = req.query;
-        
-        const responses = await Respons.find({}).populate(populate);    
-        res.status(200).json({
-          success: true,
-          responses
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error fetching responses' });
-    }
+    
+    const { populate, min ,max } = req.query;
+    
+    const responses = await Respons.find({}).populate(populate);    
+    res.status(StatusCodes.OK).json({
+        success: true,
+        responses
+    });
+
 })
 
 const getRespons = asyncHandler(async (req, res, next) => {
@@ -25,7 +23,7 @@ const getRespons = asyncHandler(async (req, res, next) => {
         return next(new NotFoundError());
     }
 
-    res.status(200).send({
+    res.status(StatusCodes.OK).send({
         "success": true,
         response
     });
@@ -35,7 +33,7 @@ const deleteRespons = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
     const deletedResponse = await Respons.findByIdAndDelete(id);
 
-    res.status(200).json({
+    res.status(StatusCodes.OK).json({
       success: true,
       message: 'Response deleted successfully'
     });
@@ -51,7 +49,7 @@ const modifyRespons = asyncHandler(async (req, res, next) => {
     }
 
     await Respons.updateOne({ "_id": id }, { name, description, value });
-    res.status(200).json({
+    res.status(StatusCodes.OK).json({
         success: true,
         message: 'Response updated successfully',
       });
@@ -70,7 +68,7 @@ const addResponse = asyncHandler(async (req,res,next) => {
     await response.save();
 
 
-    res.status(200).json({
+    res.status(StatusCodes.OK).json({
         success: true,
         message: 'Response added successfully',
       });

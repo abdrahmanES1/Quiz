@@ -3,6 +3,7 @@ const asyncHandler = require('express-async-handler');
 const Question = require('../models/questions.model');
 const NotFoundError = require("../../Errors/NotFoundError");
 const Response = require("../models/responses.model")
+const { StatusCodes } = require('http-status-codes');
 
 
 const getAllQuestions = asyncHandler(async (req, res, next) => {
@@ -10,7 +11,7 @@ const getAllQuestions = asyncHandler(async (req, res, next) => {
         const { populate, min ,max } = req.query;
         
         const questions = await Question.find({}).populate(populate);    
-        res.status(200).json({
+        res.status(StatusCodes.OK).json({
           success: true,
           questions
         });
@@ -28,7 +29,7 @@ const getQuestion = asyncHandler(async (req, res, next) => {
         return next(new NotFoundError());
     }
 
-    res.status(200).send({
+    res.status(StatusCodes.OK).send({
         "success": true,
         question
     });
@@ -39,7 +40,7 @@ const deleteQuestion = asyncHandler(async (req, res, next) => {
     const deletedQuestion = await Question.findByIdAndDelete(id);
     await Response.deleteMany({"question" : id})
 
-    res.status(200).json({
+    res.status(StatusCodes.OK).json({
       success: true,
       message: 'Question deleted successfully'
     });
@@ -55,7 +56,7 @@ const modifyQuestion = asyncHandler(async (req, res, next) => {
     }
 
     await Question.updateOne({ "_id": id }, { name, description });
-    res.status(200).json({
+    res.status(StatusCodes.OK).json({
         success: true,
         message: 'Question updated successfully',
       });
@@ -74,7 +75,7 @@ const addQuestion = asyncHandler(async (req,res,next) => {
 
     // const question = await Question.create({ email, password, firstname, lastname })
 
-    res.status(200).json({
+    res.status(StatusCodes.OK).json({
         success: true,
         message: 'Question added successfully',
       });

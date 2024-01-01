@@ -4,24 +4,22 @@ const Exam = require('../models/exams.model');
 const Question = require("../models/questions.model")
 const Response = require("../models/responses.model")
 const NotFoundError = require("../../Errors/NotFoundError");
+const { StatusCodes } = require('http-status-codes');
 
 const getAllExams = asyncHandler(async (req, res, next) => {
-    try {
-        const { populate, min ,max } = req.query;
-        
-        // let query = {}
-        // if (min) query.score = { $gte: min };
-        // if (max) query.score = { $lte: max };
+
+    const { populate, min ,max } = req.query;
     
-        const exams = await Exam.find({}).populate(populate);    
-        res.status(200).json({
-          success: true,
-          exams
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error fetching exams' });
-    }
+    // let query = {}
+    // if (min) query.score = { $gte: min };
+    // if (max) query.score = { $lte: max };
+
+    const exams = await Exam.find({}).populate(populate);    
+    res.status(200).json({
+        success: true,
+        exams
+    });
+
 })
 
 const getExam = asyncHandler(async (req, res, next) => {
@@ -32,7 +30,7 @@ const getExam = asyncHandler(async (req, res, next) => {
         return next(new NotFoundError());
     }
 
-    res.status(200).send({
+    res.status(StatusCodes.OK).send({
         "success": true,
         exam
     });
@@ -47,7 +45,7 @@ const deleteExam = asyncHandler(async (req, res, next) => {
     //     await Response.deleteMany({"question" : question._id});
     // }
 
-    res.status(200).json({
+    res.status(StatusCodes.OK).json({
       success: true,
       message: 'Exam deleted successfully'
     });
@@ -63,7 +61,7 @@ const modifyExam = asyncHandler(async (req, res, next) => {
     }
 
     await Exam.updateOne({ "_id": id }, { name, description });
-    res.status(200).json({
+    res.status(StatusCodes.OK).json({
         success: true,
         message: 'Exam updated successfully',
       });
@@ -81,10 +79,11 @@ const addExam = asyncHandler(async (req,res,next) => {
 
     // const question = await Question.create({ email, password, firstname, lastname })
 
-    res.status(200).json({
-        success: true,
-        message: 'Exam added successfully',
-      });
+    res.status(StatusCodes.OK).json({ 
+        success: true, 
+        message: 'Exam added successfully', 
+        exam 
+    }) 
 });
 
 
