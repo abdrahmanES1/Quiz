@@ -1,18 +1,18 @@
 const asyncHandler = require('express-async-handler');
-const Student = require('../models/students.model');
+const User = require('../models/users.model');
 const HttpError = require('../../Errors/HttpError');
 const bcrypt = require('bcrypt');
 
 const register = asyncHandler(async (req, res, next) => {
-    const { email, password, firstname, lastname } = req.body;
+    const { email, password, firstname, lastname, role } = req.body;
 
-    if (await Student.findOne({ email })) {
+    if (await User.findOne({ email })) {
         return next(new HttpError("Email Already Exist", 403));
     }
 
-    const student = await Student.create({ email, password, firstname, lastname })
+    const user = await User.create({ email, password, firstname, lastname, role })
 
-    sendTokenResponse(student, 200, res);
+    sendTokenResponse(user, 200, res);
 })
 
 const login = asyncHandler(async (req, res, next) => {
@@ -21,34 +21,34 @@ const login = asyncHandler(async (req, res, next) => {
         return next(new HttpError('Please Provide an Email and Password', 400));
     }
 
-    const student = await Student.findOne({ email }).select('+password');
+    const user = await User.findOne({ email }).select('+password');
 
-    if (!student) {
+    if (!user) {
         return next(new HttpError('Email Does Not Exist Please Register First', 401));
     }
 
-    const isMatch = await bcrypt.compare(password, student.password);
+    const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
         return next(new HttpError('Wrong email or password', 401));
     }
 
-    sendTokenResponse(student, 200, res);
+    sendTokenResponse(user, 200, res);
 });
 
 const getMe = asyncHandler(async (req, res, next) => {
 
-    const student = await Student.findById(req.student.id);
+    const user = await User.findById(req.user.id);
     res.status(200).json({
         success: true,
-        user: student,
+        user: user,
     });
 
 });
 
-const sendTokenResponse = (student, statusCode, res) => {
+const sendTokenResponse = (user, statusCode, res) => {
 
-    const token = student.getSignedJwtToken();
+    const token = user.getSignedJwtToken();
 
     res.status(statusCode).json({
         success: true,

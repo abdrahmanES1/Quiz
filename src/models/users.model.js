@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
 const Roles = require('../constants/Roles');
 
-const StudentSchema = new Schema({
+const UserSchema = new Schema({
     firstname: { type: String, required: [true, 'Please add a first name'] },
     lastname: { type: String, required: [true, 'Please add a last name'] },
     email: {
@@ -22,11 +22,11 @@ const StudentSchema = new Schema({
         select: false
     },
     major: { type: Schema.ObjectId, ref: 'Major' },
-    roles: { type: [String], default: Roles.STUDENT }
+    role: { type: String, required: [true, 'Please provide a role'] }
 }, { timestamps: true })
 
 
-StudentSchema.pre('save', async function (next) {
+UserSchema.pre('save', async function (next) {
     if (!this.isModified('password')) {
         next();
     }
@@ -35,13 +35,12 @@ StudentSchema.pre('save', async function (next) {
     next();
 });
 
-StudentSchema.methods.getSignedJwtToken = function () {
-    //TODO : add role 
-    return jwt.sign({ id: this._id, roles: this.roles }, process.env.SECRET_TOKEN, {
+UserSchema.methods.getSignedJwtToken = function () {
+    return jwt.sign({ id: this._id, role: this.role }, process.env.SECRET_TOKEN, {
         expiresIn: process.env.JWT_EXPIRE_IN
     });
 };
 
-const Student = model("Student", StudentSchema);
+const User = model("User", UserSchema);
 
-module.exports = Student;
+module.exports = User;
