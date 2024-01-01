@@ -2,8 +2,6 @@ import { create } from 'zustand'
 import { devtools, persist, createJSONStorage } from 'zustand/middleware'
 import axiosInstance from "../../utils/axiosInstance";
 
-
-
 export const useAuthStore = create(devtools(persist((set, get) => ({
     token: localStorage.getItem('token'),
     isAuthenticated: false,

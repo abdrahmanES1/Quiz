@@ -1,38 +1,61 @@
-// src/components/ExamsPage.js
-import React, { useState, useEffect } from 'react';
-import { Box, Heading, Text, Button } from '@chakra-ui/react';
-// import { getAllExams } from '../api/examApi'; // Implement a function to fetch all exams
+import React from 'react';
+import { Skeleton, Box, Heading, Table, TableCaption, Thead, Tr, Th, Tbody, Td, TableContainer, Tfoot } from '@chakra-ui/react';
+import useExams from '../hooks/useExams';
+import { Link } from 'react-router-dom';
 
 const ExamsPage = () => {
-    const [exams, setExams] = useState([]);
-
-    useEffect(() => {
-        // Fetch all exams and update the state
-        // getAllExams()
-        //     .then((examsData) => setExams(examsData))
-        //     .catch((error) => console.error('Error fetching exams:', error));
-    }, []);
+    const { exams, isLoading } = useExams();
 
     return (
-        <Box textAlign="center" padding="6" maxWidth="md" margin="auto">
+        <Box textAlign="center" padding="6" margin="auto">
             <Heading as="h2" size="xl" mb="4">
                 All Exams
             </Heading>
-            {exams.length > 0 ? (
-                exams.map((exam) => (
-                    <Box key={exam._id} p="4" my="2" borderWidth="1px" borderRadius="lg">
-                        <Heading as="h3" size="lg" mb="2">
-                            {exam.title}
-                        </Heading>
-                        <Text fontSize="md" mb="2">
-                            Exam ID: {exam._id}
-                        </Text>
-                        {/* Add additional exam details as needed */}
-                    </Box>
-                ))
-            ) : (
-                <Text fontSize="xl">No exams found.</Text>
-            )}
+
+            <TableContainer>
+                <Table variant='simple' >
+                    <TableCaption>{exams.length === 0 ? "No data" : ""}</TableCaption>
+                    <Thead>
+                        <Tr>
+                            <Th>Id</Th>
+                            <Th>Name</Th>
+                            <Th>Description</Th>
+                            <Th>Questions</Th>
+                        </Tr>
+                    </Thead>
+                    <Tbody>
+                        {isLoading ? <Tr>
+                            <Td><Skeleton height='25px' /></Td>
+                            <Td><Skeleton height='25px' /></Td>
+                            <Td><Skeleton height='25px' /></Td>
+                            <Td><Skeleton height='25px' /></Td>
+                        </Tr>
+                            :
+                            ""}
+                        {exams.length > 0 ? (
+                            exams.map((exam) => (
+                                <Tr key={exam._id} >
+                                    <Td>{exam._id}</Td>
+                                    <Td>{exam?.name}</Td>
+                                    <Td>{exam?.description}</Td>
+                                    <Td>
+                                        <Link to={`admin/exams/${exam._id}/questions`}>
+                                            Questions
+                                        </Link>
+                                    </Td>
+                                </Tr>
+                            ))) : ""}
+                    </Tbody>
+                    <Tfoot>
+                        <Tr>
+                            <Th>Id</Th>
+                            <Th>Name</Th>
+                            <Th>Description</Th>
+                            <Th>Questions</Th>
+                        </Tr>
+                    </Tfoot>
+                </Table>
+            </TableContainer>
         </Box>
     );
 };

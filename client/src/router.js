@@ -10,7 +10,12 @@ import AdminLogin from './pages/auth/AdminLogin';
 import NotFound from './pages/NotFound';
 import Profile from './pages/Profile';
 import ExamsPage from './pages/ExamsPage';
-import MajorsPage from './pages/MajorsPage';
+import MajorsPage from './pages/majors/MajorsPage';
+import AddMajor from './pages/majors/AddMajor';
+import UpdateMajor from './pages/majors/UpdateMajorPage';
+import MajorPage from './pages/majors/MajorPage';
+import MajorUsersPage from './pages/majors/MajorUsersPage';
+import MajorExamsPage from './pages/majors/MajorExamsPage';
 
 const router = createBrowserRouter([
     {
@@ -28,10 +33,40 @@ const router = createBrowserRouter([
                 path: '*',
                 element: <NotFound />
             },
+            // for testing
             {
-                    path: '/admin/majors',
-                    element: <MajorsPage />
-                },
+                path: '/admin/majors',
+                children: [
+                    {
+                        path: "",
+                        element: <MajorsPage />,
+                    },
+                    {
+                        path: ":id",
+                        element: <MajorPage />
+                    },
+                    {
+                        path: "new",
+                        element: <AddMajor />
+                    },
+                    {
+                        path: ":id/update",
+                        element: <UpdateMajor />
+                    },
+                    {
+                        path: ":id/users",
+                        element: <MajorUsersPage />
+                    },
+                    {
+                        path: ":id/exams",
+                        element: <MajorExamsPage />
+                    },
+                ]
+            },
+            {
+                path: '/admin/exams',
+                element: <ExamsPage />
+            },
         ]
     },
     {
@@ -58,7 +93,6 @@ const router = createBrowserRouter([
                 path: '/admin/dashboard',
                 element: "<Admin />"
             },
-
             // {
             //     path: '/admin/exams',
             //     element: <ExamsPage />
