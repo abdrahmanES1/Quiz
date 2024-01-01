@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const Student = require('../models/students.model');
+const User = require('../models/users.model');
 const asyncHandler = require('express-async-handler');
 const HttpError = require('../../Errors/HttpError');
 
@@ -11,10 +11,10 @@ const enableProtection = asyncHandler(async (req, res, next) => {
 
     try {
         const decoded = await jwt.verify(token, process.env.SECRET_TOKEN);
-        const student = await Student.findById(decoded.id);
+        const user = await User.findById(decoded.id);
 
-        if (student) {
-            req.student = student;
+        if (user) {
+            req.user = user;
         }
 
     } catch (error) {
@@ -31,8 +31,8 @@ const enableProtection = asyncHandler(async (req, res, next) => {
 
 const authorize = (...roles) => {
     return async (req, res, next) => {
-        if (!roles.includes(req.student.role)) {
-            return next(new HttpError(`${req.student.role} role is not authorized to access this route`, 403))
+        if (!roles.includes(req.user.role)) {
+            return next(new HttpError(`${req.user.role} role is not authorized to access this route`, 403))
         }
         next();
     }
