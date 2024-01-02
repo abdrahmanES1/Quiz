@@ -5,7 +5,7 @@ const { getAllExams, getExam, modifyExam, deleteExam, addExam } = require('../co
 const route = Router();
 
 route.get('', getAllExams);
-route.post("/add", addExam);
+route.post("", addExam);
 route.get('/:id', getExam);
 route.put('/:id', modifyExam);
 route.delete('/:id', deleteExam);
