@@ -1,12 +1,13 @@
 import React from 'react'
 import { Button, Modal, ModalContent, ModalOverlay, ModalBody, ModalCloseButton, ModalHeader, ModalFooter } from '@chakra-ui/react'
-import deleteMajor from '../../services/majors/deleteMajor';
+import useMajorStore from '../../features/majors/useMajorStore';
 
 function DeleteMajorModal({ isOpen, onOpen, onClose, id }) {
+    const deleteMajor = useMajorStore(state => state.deleteMajor)
 
     const handleSubmit = async () => {
         const res = await deleteMajor(id);
-
+        if(res) onClose()
     };
     return (
         <>

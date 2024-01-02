@@ -9,9 +9,12 @@ import { useMajors } from '../../hooks/majors';
 import { MdEdit } from "react-icons/md";
 import DeleteMajorModal from '../../components/modals/DeleteMajorModel';
 import EditeMajorModal from '../../components/modals/EditeMajorModal';
+import useMajorStore from '../../features/majors/useMajorStore';
 
 const MajorsPage = () => {
     const { majors, isLoading } = useMajors()
+    // const majors = useMajorStore(state => state.majors)
+    // const isLoading = useMajorStore(state => state.isLoading)
     const { isOpen, onOpen, onClose } = useDisclosure()
     const { isOpen: isEditOpen, onOpen: onEditOpen, onClose: onEditClose } = useDisclosure()
     const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure()
@@ -52,7 +55,7 @@ const MajorsPage = () => {
                                             {/* TODO : EDIT LOGI */}
                                             <MdEdit />
                                         </Button>
-                                            <EditeMajorModal onClose={onEditClose} onOpen={onEditOpen} isOpen={isEditOpen} id={major._id} />
+                                        <EditeMajorModal onClose={onEditClose} onOpen={onEditOpen} isOpen={isEditOpen} id={major._id} />
                                         <Button size='sm' colorScheme="blue" marginEnd={2} as={Link} to={`/admin/majors/${major._id}`}>
                                             <FaEye />
                                         </Button>
@@ -60,7 +63,7 @@ const MajorsPage = () => {
                                         <Button size='sm' colorScheme="red" as={Link} onClick={onDeleteOpen}>
                                             <MdDelete />
                                         </Button>
-                                            <DeleteMajorModal onClose={onDeleteClose} onOpen={onDeleteOpen} isOpen={isDeleteOpen} id={major._id} />
+                                        <DeleteMajorModal onClose={onDeleteClose} onOpen={onDeleteOpen} isOpen={isDeleteOpen} id={major._id} />
 
                                     </Td>
                                 </Tr>

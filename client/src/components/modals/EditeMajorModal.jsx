@@ -2,9 +2,10 @@ import React from 'react'
 import { FormControl, FormLabel, Input, Stack, Text, Button, Modal, ModalContent, ModalOverlay, ModalBody, ModalCloseButton, ModalHeader, ModalFooter } from '@chakra-ui/react'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import editMajor from '../../services/majors/editMajor';
+import useMajorStore from '../../features/majors/useMajorStore';
 
 function EditeMajorModal({ isOpen, onOpen, onClose, id }) {
+    const updateMajor = useMajorStore(state => state.updateMajor);
     const initialValues = {
         name: '',
     };
@@ -15,8 +16,8 @@ function EditeMajorModal({ isOpen, onOpen, onClose, id }) {
 
     const handleSubmit = async (values) => {
         const { name } = values;
-        const res = await editMajor(id, { name });
-
+        const res = await updateMajor(id, { name });
+        if (res) onClose()
     };
     return (
         <>
