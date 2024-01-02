@@ -11,11 +11,9 @@ import NotFound from './pages/NotFound';
 import Profile from './pages/Profile';
 import ExamsPage from './pages/ExamsPage';
 import MajorsPage from './pages/majors/MajorsPage';
-import AddMajor from './pages/majors/AddMajor';
-import UpdateMajor from './pages/majors/UpdateMajorPage';
 import MajorPage from './pages/majors/MajorPage';
 import MajorUsersPage from './pages/majors/MajorUsersPage';
-import MajorExamsPage from './pages/majors/MajorExamsPage';
+
 
 const router = createBrowserRouter([
     {
@@ -45,22 +43,12 @@ const router = createBrowserRouter([
                         path: ":id",
                         element: <MajorPage />
                     },
-                    {
-                        path: "new",
-                        element: <AddMajor />
-                    },
-                    {
-                        path: ":id/update",
-                        element: <UpdateMajor />
-                    },
+
                     {
                         path: ":id/users",
                         element: <MajorUsersPage />
                     },
-                    {
-                        path: ":id/exams",
-                        element: <MajorExamsPage />
-                    },
+
                 ]
             },
             {
