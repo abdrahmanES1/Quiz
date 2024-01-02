@@ -1,7 +1,9 @@
 import React from 'react';
-import { Skeleton, Box, Heading, Table, TableCaption, Thead, Tr, Th, Tbody, Td, TableContainer, Tfoot } from '@chakra-ui/react';
+import { Button, Skeleton, Box, Heading, Table, TableCaption, Thead, Tr, Th, Tbody, Td, TableContainer, Tfoot } from '@chakra-ui/react';
 import useExams from '../hooks/useExams';
 import { Link } from 'react-router-dom';
+import { FaEye } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 
 const ExamsPage = () => {
     const { exams, isLoading } = useExams();
@@ -13,11 +15,10 @@ const ExamsPage = () => {
             </Heading>
 
             <TableContainer>
-                <Table variant='simple' >
+                <Table variant='striped' colorScheme='gray' >
                     <TableCaption>{exams.length === 0 ? "No data" : ""}</TableCaption>
                     <Thead>
                         <Tr>
-                            <Th>Id</Th>
                             <Th>Name</Th>
                             <Th>Description</Th>
                             <Th>Questions</Th>
@@ -25,7 +26,7 @@ const ExamsPage = () => {
                     </Thead>
                     <Tbody>
                         {isLoading ? <Tr>
-                            <Td><Skeleton height='25px' /></Td>
+
                             <Td><Skeleton height='25px' /></Td>
                             <Td><Skeleton height='25px' /></Td>
                             <Td><Skeleton height='25px' /></Td>
@@ -35,20 +36,21 @@ const ExamsPage = () => {
                         {exams.length > 0 ? (
                             exams.map((exam) => (
                                 <Tr key={exam._id} >
-                                    <Td>{exam._id}</Td>
                                     <Td>{exam?.name}</Td>
                                     <Td>{exam?.description}</Td>
-                                    <Td>
-                                        <Link to={`admin/exams/${exam._id}/questions`}>
-                                            Questions
-                                        </Link>
+                                    <Td >
+                                        <Button size='sm' colorScheme="blue" marginEnd={2} as={Link} to={`/admin/exams/${exam._id}`}>
+                                            <FaEye />
+                                        </Button>
+                                        <Button size='sm' colorScheme="red" as={Link} >
+                                            <MdDelete />
+                                        </Button>
                                     </Td>
                                 </Tr>
                             ))) : ""}
                     </Tbody>
                     <Tfoot>
                         <Tr>
-                            <Th>Id</Th>
                             <Th>Name</Th>
                             <Th>Description</Th>
                             <Th>Questions</Th>
