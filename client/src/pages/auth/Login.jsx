@@ -27,8 +27,8 @@ const Login = () => {
 
     const handleSubmit = async (values) => {
         const res = await login(values.email, values.password);
-        if (res) {
-            navigate('/')
+        if (res && isAuthenticated) {
+            res.user.role === "STUDENT" ? navigate('/dashboard') : navigate('/admin/exams')
         }
     };
 

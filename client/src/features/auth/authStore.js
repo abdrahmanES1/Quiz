@@ -23,7 +23,7 @@ export const useAuthStore = create(devtools(persist((set, get) => ({
                 }
             })
             set({ user: await response.data.user, isAuthenticated: true })
-            return true
+            return response.data
         } catch (err) {
             set({ error: err?.response?.data?.message })
         } finally {
@@ -38,7 +38,7 @@ export const useAuthStore = create(devtools(persist((set, get) => ({
             let response = await axiosInstance.post("/login", { email, password })
             set({ token: await response.data.token, isAuthenticated: true })
             await get().getMe(get().token);
-            return true
+            return response.data
         } catch (err) {
             set({ error: err?.response?.data?.message })
         } finally {

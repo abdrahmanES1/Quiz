@@ -38,7 +38,7 @@ const login = asyncHandler(async (req, res, next) => {
 
 const getMe = asyncHandler(async (req, res, next) => {
 
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.user.id).populate('major');
     res.status(200).json({
         success: true,
         user: user,
