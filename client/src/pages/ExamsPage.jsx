@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Skeleton, Box, Heading, Table, TableCaption, Thead, Tr, Th, Tbody, Td, TableContainer, Tfoot } from '@chakra-ui/react';
-import useExams from '../hooks/useExams';
+import {useExams} from '../hooks/exams/index';
 import { Link } from 'react-router-dom';
 import { FaEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
@@ -33,7 +33,7 @@ const ExamsPage = () => {
                         </Tr>
                             :
                             ""}
-                        {exams.length > 0 ? (
+                        {exams?.length > 0 ? (
                             exams.map((exam) => (
                                 <Tr key={exam._id} >
                                     <Td>{exam?.name}</Td>

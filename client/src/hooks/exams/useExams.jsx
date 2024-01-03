@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import getAllExams from '../../services/exams/getAllExams'
+import useExamStore from '../../features/exams/useExamStore'
 
 function useExams() {
-    const [exams, setExams] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
+
+    const getAllExams = useExamStore(state => state.getAllExams);
+    const isLoading = useExamStore(state => state.isLoading);
+    const exams = useExamStore(state => state.exams);
+    // const [exams, setExams] = useState([])
+    // const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        setIsLoading(true)
-        getAllExams().then(res => {
-            setExams(res)
-            setIsLoading(false);
-        })
-
+        getAllExams();
     }, [])
 
     return { exams, isLoading }

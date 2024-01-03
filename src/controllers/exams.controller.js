@@ -15,7 +15,6 @@ const getAllExams = asyncHandler(async (req, res, next) => {
         success: true,
         exams
     });
-
 })
 
 const getExam = asyncHandler(async (req, res, next) => {
