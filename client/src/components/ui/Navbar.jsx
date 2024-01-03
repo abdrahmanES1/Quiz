@@ -18,18 +18,22 @@ import useAuthStore from "../../features/auth/authStore";
 
 export default function Navbar() {
     const isAuthenticated = useAuthStore(state => state.isAuthenticated)
+    const userRole = useAuthStore(state => state.user?.role)
     const logout = useAuthStore(state => state.logout)
-  
+    const bg = useColorModeValue('white', 'gray.800')
     const mobileNav = useDisclosure();
 
+
+    // TODO : ADD THEME TOGGLER
     return (
         <React.Fragment>
             <chakra.header
-
+                background="teal"
                 w="full"
                 px={{ base: 2, sm: 4 }}
                 py={4}
-                shadow="md"
+                shadow="sm"
+
             >
                 <Flex alignItems="center" justifyContent="space-between" mx="auto">
                     <Flex>
@@ -48,13 +52,18 @@ export default function Navbar() {
                             display={{ base: "none", md: "inline-flex" }}
                         >
 
-                            {isAuthenticated ? null : <Button as={NavLink} variant="ghost"  to="/login">Login</Button>}
+                            {isAuthenticated ? null : <Button as={NavLink} variant="ghost" to="/login">Login</Button>}
 
-                            <NavLink >Pricing</NavLink>
+                            {userRole === "STUDENT" ? <NavLink to="/dashboard" >dashboard</NavLink> : null}
+                            {["ADMIN", "SUPER_ADMIN", "ADMIN"].includes(userRole) ?
+                                <>
+                                    <NavLink to="/admin/exams" >Exams</NavLink>
+                                    <NavLink to="/admin/majors" >Majors</NavLink>
+                                </> : null}
 
                             {isAuthenticated ? <Button onClick={logout} variant="ghost" >Logout</Button> : null}
                         </HStack>
-                        <Box display={{ base: "inline-flex", md: "none" }}>
+                        <Box bg={bg}  display={{ base: "inline-flex", md: "none" }}>
                             <IconButton
                                 display={{ base: "flex", md: "none" }}
                                 aria-label="Open menu"
@@ -64,11 +73,12 @@ export default function Navbar() {
                                 icon={<AiOutlineMenu />}
                                 onClick={mobileNav.onOpen}
                             />
-                            <VStack
+                            <VStack 
                                 pos="absolute"
                                 top={0}
                                 left={0}
                                 right={0}
+                                bg={bg}
                                 display={mobileNav.isOpen ? "flex" : "none"}
                                 flexDirection="column"
                                 p={2}
@@ -82,22 +92,17 @@ export default function Navbar() {
                                     aria-label="Close menu"
                                     onClick={mobileNav.onClose}
                                 />
+                                {isAuthenticated ? null : <Button as={NavLink} variant="ghost" to="/login">Login</Button>}
 
-                                <Button w="full" variant="ghost" as={NavLink}>
-                                    Features
-                                </Button>
-                                <Button w="full" variant="ghost"  as={NavLink}>
-                                    Pricing
-                                </Button>
-                                <Button w="full" variant="ghost"  as={NavLink}>
-                                    Blog
-                                </Button>
-                                <Button w="full" variant="ghost"  as={NavLink}>
-                                    Company
-                                </Button>
-                                <Button w="full" variant="ghost"  as={NavLink}>
-                                    Sign in
-                                </Button>
+                                {userRole === "STUDENT" ? <NavLink to="/dashboard" >dashboard</NavLink> : null}
+                                {["ADMIN", "SUPER_ADMIN", "ADMIN"].includes(userRole) ?
+                                    <>
+                                        <NavLink to="/admin/exams" >Exams</NavLink>
+                                        <NavLink to="/admin/majors" >Majors</NavLink>
+                                    </> : null}
+
+                                {isAuthenticated ? <Button onClick={logout} variant="ghost" >Logout</Button> : null}
+
                             </VStack>
                         </Box>
                     </HStack>

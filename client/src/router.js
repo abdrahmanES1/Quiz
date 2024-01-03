@@ -13,6 +13,8 @@ import ExamsPage from './pages/ExamsPage';
 import MajorsPage from './pages/majors/MajorsPage';
 import MajorPage from './pages/majors/MajorPage';
 import MajorUsersPage from './pages/majors/MajorUsersPage';
+import StudentsLayout from './layouts/StudentsLayout';
+import Dashboard from './pages/students/Dashboard';
 
 
 const router = createBrowserRouter([
@@ -90,6 +92,14 @@ const router = createBrowserRouter([
             //     element: <MajorsPage />
             // },
 
+        ]
+    }, {
+        element: <StudentsLayout />,
+        children: [
+            {
+                element: <Dashboard />,
+                path: "/dashboard"
+            }
         ]
     }
 ])

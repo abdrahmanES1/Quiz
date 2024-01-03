@@ -2,7 +2,7 @@ const asyncHandler = require('express-async-handler');
 const User = require('../models/users.model');
 const NotFoundError = require('../../Errors/NotFoundError');
 const { Types } = require('mongoose');
-const { StatusCodes } =  require('http-status-codes');
+const { StatusCodes } = require('http-status-codes');
 
 const getAllUsers = asyncHandler(async (req, res, next) => {
     const { populate, min, max } = req.query;
@@ -30,22 +30,22 @@ const deleteUser = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
     const deletedUser = await User.findByIdAndDelete(id);
 
-    if(!deletedUser) throw new NotFoundError("User not Found");
+    if (!deletedUser) throw new NotFoundError("User not Found");
 
     res.status(StatusCodes.OK).json({
-      success: true,
-      message: 'User deleted successfully'
+        success: true,
+        message: 'User deleted successfully'
     });
 
 });
 
 const modifyUser = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
-    const { firstname, lastname, email, password, major } = req.body ;
+    const { firstname, lastname, email, password, major } = req.body;
 
-    if(!await User.findById(id)) throw new NotFoundError("User not found");
+    if (!await User.findById(id)) throw new NotFoundError("User not found");
 
-    await User.updateOne({_id : id}, { firstname, lastname, email, password, major });
+    await User.updateOne({ _id: id }, { firstname, lastname, email, password, major });
 
     return res.status(StatusCodes.OK).send({
         "success": true,
@@ -71,7 +71,8 @@ const getUserExams = asyncHandler(async (req, res, next) => {
                 $match: {
                     _id: new Types.ObjectId(id)
                 }
-            }
+            },
+            { $unset: 'exams.password' }
         ]
     );
 
@@ -84,5 +85,5 @@ const getUserExams = asyncHandler(async (req, res, next) => {
 
 
 
-module.exports = { getAllUsers, getUser, deleteUser, modifyUser,getUserExams };
+module.exports = { getAllUsers, getUser, deleteUser, modifyUser, getUserExams };
 
