@@ -1,9 +1,11 @@
 const asyncHandler = require('express-async-handler');
 const User = require('../models/users.model');
 const NotFoundError = require('../../Errors/NotFoundError');
+const { Types } = require('mongoose');
+import { StatusCodes } from 'http-status-codes';
 
 const getAllUsers = asyncHandler(async (req, res, next) => {
-    const { populate, min ,max } = req.query;
+    const { populate, min, max } = req.query;
 
     const users = await User.find({});
 
@@ -52,7 +54,35 @@ const modifyUser = asyncHandler(async (req, res, next) => {
 });
 
 
+const getUserExams = asyncHandler(async (req, res, next) => {
+    const { id } = req.params;
 
-module.exports = { getAllUsers, getUser, deleteUser, modifyUser };
-    
-    
+    const user = await User.aggregate(
+        [
+            {
+                $lookup: {
+                    from: 'exams',
+                    localField: 'major',
+                    foreignField: 'major',
+                    as: 'exams'
+                }
+            },
+            {
+                $match: {
+                    _id: new Types.ObjectId(id)
+                }
+            }
+        ]
+    );
+
+    res.status(StatusCodes.OK).send({
+        "success": true,
+        exams: user[0].exams
+    });
+});
+
+
+
+
+module.exports = { getAllUsers, getUser, deleteUser, modifyUser,getUserExams };
+
