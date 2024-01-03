@@ -2,7 +2,7 @@ const asyncHandler = require('express-async-handler');
 const User = require('../models/users.model');
 const NotFoundError = require('../../Errors/NotFoundError');
 const { Types } = require('mongoose');
-import { StatusCodes } from 'http-status-codes';
+const { StatusCodes } =  require('http-status-codes');
 
 const getAllUsers = asyncHandler(async (req, res, next) => {
     const { populate, min, max } = req.query;
