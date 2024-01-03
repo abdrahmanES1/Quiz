@@ -6,7 +6,7 @@ import getAllExams from '../../services/exams/getAllExams';
 export const useExamStore = create(devtools(persist((set, get) => ({
     // token: localStorage.getItem('token'),
     // isAuthenticated: false,
-    isLoading: true,
+    isLoading: false,
     exams: [],
     error: null,
     // name : { type:String, required : [true, "Question name required"]},
