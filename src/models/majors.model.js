@@ -4,7 +4,8 @@ const { Schema, model } = require('mongoose')
 const MajorSchema = new Schema({
     name: { type: String, required: [true, "Major Name Required"], unique: [true, "Major Name must be unique"] },
     users: [{ type: Schema.ObjectId, ref: "User" }],
-    exams: [{ type: Schema.ObjectId, ref: "Exam" }]
+    exams: [{ type: Schema.ObjectId, ref: "Exam" }],
+    createdBy: { type: Schema.ObjectId, ref: "User" }
 }, { timestamps: true })
 
 

@@ -1,13 +1,13 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/users.model');
 const asyncHandler = require('express-async-handler');
-const HttpError = require('../../Errors/HttpError');
-
+const UnauthorizedError = require('../../Errors/UnauthorizedError');
+const ForbiddenError = require('../../Errors/ForbiddenError')
 
 const enableProtection = asyncHandler(async (req, res, next) => {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
-    if (token == null) { return next(new HttpError("Not authorized to access this route and token not exist", 401)) }
+    if (token == null) { return next(new UnauthorizedError("Not authorized to access this route and token not exist")) }
 
     try {
         const decoded = await jwt.verify(token, process.env.SECRET_TOKEN);
@@ -18,7 +18,7 @@ const enableProtection = asyncHandler(async (req, res, next) => {
         }
 
     } catch (error) {
-        return next(new HttpError("Not authorized to access this route", 401))
+        return next(new UnauthorizedError("Not authorized to access this route"))
     }
 
     next();
@@ -32,7 +32,7 @@ const enableProtection = asyncHandler(async (req, res, next) => {
 const authorize = (...roles) => {
     return async (req, res, next) => {
         if (!roles.includes(req.user.role)) {
-            return next(new HttpError(`${req.user.role} role is not authorized to access this route`, 403))
+            return next(new ForbiddenError(`${req.user.role} role is not authorized to access this route`))
         }
         next();
     }
@@ -40,7 +40,7 @@ const authorize = (...roles) => {
 const authorizeTeacher = (...roles) => {
     return async (req, res, next) => {
         if (!roles.includes(req.teacher.role)) {
-            return next(new HttpError(`${req.teacher.role} role is not authorized to access this route`, 403))
+            return next(new ForbiddenError(`${req.teacher.role} role is not authorized to access this route`))
         }
         next();
     }

@@ -1,6 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const User = require('../models/users.model');
-const HttpError = require('../../Errors/HttpError');
+const BadRequestError = require('../../Errors/BadRequestError');
 const bcrypt = require('bcrypt');
 
 const register = asyncHandler(async (req, res, next) => {
@@ -18,19 +18,19 @@ const register = asyncHandler(async (req, res, next) => {
 const login = asyncHandler(async (req, res, next) => {
     const { email, password } = req.body;
     if (!email || !password) {
-        return next(new HttpError('Please Provide an Email and Password', 400));
+        return next(new BadRequestError('Please Provide an Email and Password'));
     }
 
     const user = await User.findOne({ email }).select('+password');
 
     if (!user) {
-        return next(new HttpError('Email Does Not Exist Please Register First', 401));
+        return next(new BadRequestError('Email Does Not Exist Please Register First'));
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-        return next(new HttpError('Wrong email or password', 401));
+        return next(new BadRequestError('Wrong email or password'));
     }
 
     sendTokenResponse(user, 200, res);

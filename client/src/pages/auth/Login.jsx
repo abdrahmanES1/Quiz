@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Checkbox, Container, FormControl, FormLabel, Heading, HStack, Input, Stack, Text } from '@chakra-ui/react';
+import { Box, Button, Center, Checkbox, Container, FormControl, FormLabel, Heading, HStack, Input, Stack, Text } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -96,7 +96,9 @@ const Login = () => {
                             onSubmit={handleSubmit}
                         >
                             <Form>
-                                {error}
+                                <Center>
+                                    <Text color="red">{error}</Text>
+                                </Center>
                                 <Stack spacing="5">
                                     <FormControl>
                                         <FormLabel htmlFor="email">Email</FormLabel>

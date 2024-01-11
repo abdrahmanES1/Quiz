@@ -15,6 +15,7 @@ import MajorPage from './pages/majors/MajorPage';
 import MajorUsersPage from './pages/majors/MajorUsersPage';
 import StudentsLayout from './layouts/StudentsLayout';
 import Dashboard from './pages/students/Dashboard';
+import TakeExam from './pages/students/TakeExam';
 
 
 const router = createBrowserRouter([
@@ -99,6 +100,10 @@ const router = createBrowserRouter([
             {
                 element: <Dashboard />,
                 path: "/dashboard"
+            },
+            {
+                element: <TakeExam />,
+                path: "/exam/:id"
             }
         ]
     }
