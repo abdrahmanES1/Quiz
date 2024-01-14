@@ -12,13 +12,16 @@ import {
     HStack,
     useDisclosure,
     Collapse,
+    useColorMode,
+    Icon
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-
+import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 import useAuthStore from "../../features/auth/authStore";
 const Navbar = () => {
+    const { colorMode, toggleColorMode } = useColorMode();
     const { isOpen, onToggle } = useDisclosure();
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
     const [isTablet, setIsTablet] = useState(window.innerWidth >= 768 && window.innerWidth < 1024);
@@ -43,7 +46,9 @@ const Navbar = () => {
             <Box bg="blue.500" color="white" p={8}>
                 <Flex align="center">
                     <Heading as="h1" size="md">
-                        <NavLink to="">Logo</NavLink>
+                        <NavLink to="">
+                            EsteQuiz
+                        </NavLink>
                     </Heading>
                     {isMobile || isTablet ? (
                         <IconButton
@@ -59,6 +64,7 @@ const Navbar = () => {
                                 <Link as={NavLink} to="/" color="white" _hover={{ textDecoration: 'none' }}>
                                     Home
                                 </Link>
+
 
                                 {isAuthenticated ?
                                     <Link
@@ -82,15 +88,21 @@ const Navbar = () => {
                             </HStack>
                         </>
                     )}
+
+
+
                     {isAuthenticated ?
                         <Button onClick={logout} colorScheme="whiteAlpha" ml={2}>
                             logout
                         </Button>
                         :
-                        <Button colorScheme="whiteAlpha" as={NavLink} to="/login" ml={2} mr={isMobile || isTablet ? 0 : 2}>
+                        <Button colorScheme="whiteAlpha" as={NavLink} to="/login" ml={2} >
                             Login
                         </Button>
                     }
+                    <Button onClick={toggleColorMode} ml={2} mr={isMobile || isTablet ? 0 : 2}>
+                        {colorMode === "light" ? <Icon as={MoonIcon} /> : <Icon as={SunIcon} />}
+                    </Button>
                 </Flex>
 
 
