@@ -6,6 +6,7 @@ const majorsRoute = require('./src/routes/majors.route.js')
 const responsesRoute = require('./src/routes/responses.route.js')
 const questionsRoute = require('./src/routes/questions.route.js')
 const examsRoute = require('./src/routes/exams.route.js')
+const resultRoute = require("./src/routes/results.route.js")
 const errorMiddleware = require('./src/middlewares/error.middleware.js')
 
 
@@ -17,6 +18,7 @@ app.use("/api/responses", responsesRoute);
 app.use("/api/questions", questionsRoute);
 app.use("/api/exams", examsRoute);
 app.use("/api/majors", majorsRoute);
+app.use("/api/results", resultRoute);
 app.use(errorMiddleware);
 
 process.on('unhandledRejection', (err, promise) => {
