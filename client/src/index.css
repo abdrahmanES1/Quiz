@@ -1,3 +1,23 @@
 .chakra-link.active{
-  text-decoration: underline;
+  position: relative;
+}
+
+.chakra-link.active::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    height: 3px;
+    width: 80%;
+    background-color: rgb(1, 180, 250);
+    animation: 2s slidein;
+}
+
+@keyframes slidein {
+    0% {
+        width: 0%;
+    }
+    to{
+        width: 80%; 
+    }
 }
