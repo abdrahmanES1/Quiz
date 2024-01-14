@@ -1,113 +1,124 @@
-import React from "react";
-
+import React, { useState } from 'react';
 import {
-    chakra,
+    ChakraProvider,
     Box,
     Flex,
-    useColorModeValue,
-    HStack,
-    Button,
-    useDisclosure,
-    VStack,
+    Heading,
+    Spacer,
     IconButton,
-    CloseButton,
-} from "@chakra-ui/react";
-import { AiOutlineMenu } from "react-icons/ai";
-import { NavLink } from "react-router-dom";
-import useAuthStore from "../../features/auth/authStore";
+    Button,
+    Link,
+    VStack,
+    HStack,
+    useDisclosure,
+    Collapse,
+} from '@chakra-ui/react';
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import { useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 
-export default function Navbar() {
+import useAuthStore from "../../features/auth/authStore";
+const Navbar = () => {
+    const { isOpen, onToggle } = useDisclosure();
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+    const [isTablet, setIsTablet] = useState(window.innerWidth >= 768 && window.innerWidth < 1024);
     const isAuthenticated = useAuthStore(state => state.isAuthenticated)
     const userRole = useAuthStore(state => state.user?.role)
     const logout = useAuthStore(state => state.logout)
-    const bg = useColorModeValue('white', 'gray.800')
-    const mobileNav = useDisclosure();
+
+    const handleResize = () => {
+        setIsMobile(window.innerWidth < 768);
+        setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024);
+    };
+
+    useEffect(() => {
+        window.addEventListener('resize', handleResize);
+
+        return () => window.removeEventListener('resize', handleResize)
+    }, [])
 
 
-    // TODO : ADD THEME TOGGLER
     return (
-        <React.Fragment>
-            <chakra.header
-                background="teal"
-                w="full"
-                px={{ base: 2, sm: 4 }}
-                py={4}
-                shadow="sm"
+        <ChakraProvider>
+            <Box bg="blue.500" color="white" p={8}>
+                <Flex align="center">
+                    <Heading as="h1" size="md">
+                        <NavLink to="">Logo</NavLink>
+                    </Heading>
+                    {isMobile || isTablet ? (
+                        <IconButton
+                            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+                            aria-label="Toggle Menu"
+                            onClick={onToggle}
+                            ml="auto"
+                        />
+                    ) : (
+                        <>
+                            <Spacer />
+                            <HStack spacing={4}>
+                                <Link as={NavLink} to="/" color="white" _hover={{ textDecoration: 'none' }}>
+                                    Home
+                                </Link>
 
-            >
-                <Flex alignItems="center" justifyContent="space-between" mx="auto">
-                    <Flex>
-                        <NavLink to="/" >
-                            <chakra.h1 fontSize="xl" fontWeight="medium" ml="2">
-                                Logo
-                            </chakra.h1>
-                        </NavLink>
-
-                    </Flex>
-                    <HStack display="flex" alignItems="center" spacing={1}>
-                        <HStack
-                            spacing={1}
-                            mr={1}
-                            color="brand.500"
-                            display={{ base: "none", md: "inline-flex" }}
-                        >
-
-                            {isAuthenticated ? null : <Button as={NavLink} variant="ghost" to="/login">Login</Button>}
-
-                            {userRole === "STUDENT" ? <NavLink to="/dashboard" >dashboard</NavLink> : null}
-                            {["ADMIN", "SUPER_ADMIN", "ADMIN"].includes(userRole) ?
-                                <>
-                                    <NavLink to="/admin/exams" >Exams</NavLink>
-                                    <NavLink to="/admin/majors" >Majors</NavLink>
-                                </> : null}
-
-                            {isAuthenticated ? <Button onClick={logout} variant="ghost" >Logout</Button> : null}
-                        </HStack>
-                        <Box bg={bg}  display={{ base: "inline-flex", md: "none" }}>
-                            <IconButton
-                                display={{ base: "flex", md: "none" }}
-                                aria-label="Open menu"
-                                fontSize="20px"
-                                color={useColorModeValue("gray.800", "inherit")}
-                                variant="ghost"
-                                icon={<AiOutlineMenu />}
-                                onClick={mobileNav.onOpen}
-                            />
-                            <VStack 
-                                pos="absolute"
-                                top={0}
-                                left={0}
-                                right={0}
-                                bg={bg}
-                                display={mobileNav.isOpen ? "flex" : "none"}
-                                flexDirection="column"
-                                p={2}
-                                pb={4}
-                                m={2}
-                                spacing={3}
-                                rounded="sm"
-                                shadow="sm"
-                            >
-                                <CloseButton
-                                    aria-label="Close menu"
-                                    onClick={mobileNav.onClose}
-                                />
-                                {isAuthenticated ? null : <Button as={NavLink} variant="ghost" to="/login">Login</Button>}
-
-                                {userRole === "STUDENT" ? <NavLink to="/dashboard" >dashboard</NavLink> : null}
+                                {isAuthenticated ?
+                                    <Link
+                                        to={["ADMIN", "SUPER_ADMIN", "ADMIN"].includes(userRole)
+                                            ? "/admin/dashboard"
+                                            : "/dashboard"
+                                        }
+                                        as={NavLink} color="white" _hover={{ textDecoration: 'none' }}>dashboard</Link>
+                                    : null}
                                 {["ADMIN", "SUPER_ADMIN", "ADMIN"].includes(userRole) ?
                                     <>
-                                        <NavLink to="/admin/exams" >Exams</NavLink>
-                                        <NavLink to="/admin/majors" >Majors</NavLink>
+                                        <Link as={NavLink} to="/admin/exams" color="white" _hover={{ textDecoration: 'none' }}>
+                                            Exams
+                                        </Link>
+                                        <Link as={NavLink} to="/admin/majors" color="white" _hover={{ textDecoration: 'none' }}>
+                                            Majors
+                                        </Link>
                                     </> : null}
 
-                                {isAuthenticated ? <Button onClick={logout} variant="ghost" >Logout</Button> : null}
 
-                            </VStack>
-                        </Box>
-                    </HStack>
+                            </HStack>
+                        </>
+                    )}
+                    {isAuthenticated ?
+                        <Button onClick={logout} colorScheme="whiteAlpha" ml={2}>
+                            logout
+                        </Button>
+                        :
+                        <Button colorScheme="whiteAlpha" as={NavLink} to="/login" ml={2} mr={isMobile || isTablet ? 0 : 2}>
+                            Login
+                        </Button>
+                    }
                 </Flex>
-            </chakra.header>
-        </React.Fragment>
+
+
+                {/* Responsive Collapse for Mobile and Tablet */}
+                <Collapse in={isOpen} animateOpacity>
+                    {(isMobile || isTablet) && (
+                        <VStack spacing={4} align="start" mt={4}>
+                            {isAuthenticated ? <Link
+                                to={["ADMIN", "SUPER_ADMIN", "ADMIN"].includes(userRole) ? "/admin/dashboard" : "/dashboard"}
+                                as={NavLink} color="white" _hover={{ textDecoration: 'none' }}>dashboard</Link> : null}
+                            <Link as={NavLink} to="/" color="white" _hover={{ textDecoration: 'none' }}>
+                                Home
+                            </Link>
+                            {["ADMIN", "SUPER_ADMIN", "ADMIN"].includes(userRole) ?
+                                <>
+                                    <Link as={NavLink} to="/admin/exams" color="white" _hover={{ textDecoration: 'none' }}>
+                                        Exams
+                                    </Link>
+                                    <Link as={NavLink} to="/admin/majors" color="white" _hover={{ textDecoration: 'none' }}>
+                                        Majors
+                                    </Link>
+                                </> : null}
+                        </VStack>
+                    )}
+                </Collapse>
+            </Box>
+        </ChakraProvider>
     );
-}
+};
+
+export default Navbar;

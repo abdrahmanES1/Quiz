@@ -14,8 +14,9 @@ import MajorsPage from './pages/majors/MajorsPage';
 import MajorPage from './pages/majors/MajorPage';
 import MajorUsersPage from './pages/majors/MajorUsersPage';
 import StudentsLayout from './layouts/StudentsLayout';
-import Dashboard from './pages/students/Dashboard';
+import Dashboard from './pages/students/StudentDashboard';
 import TakeExam from './pages/students/TakeExam';
+import AdminDashboard from './pages/admins/AdminDashboard';
 
 
 const router = createBrowserRouter([
@@ -82,7 +83,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '/admin/dashboard',
-                element: "<Admin />"
+                element: <AdminDashboard />
             },
             // {
             //     path: '/admin/exams',
