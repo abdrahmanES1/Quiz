@@ -2,15 +2,21 @@ import { useEffect, useState } from 'react'
 import getUserExams from '../../services/exams/getUserExams.js'
 
 function useUserExams(id) {
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [exams, setExams] = useState([]);
+    const [error, setError] = useState(null);
     useEffect(() => {
-        setIsLoading(true);
-        getUserExams(id).then(exams => setExams(exams)).finally(_ => setIsLoading(false))
-        setIsLoading(false);
+        getUserExams(id)
+            .then(exams => {
+                setExams(exams);
+                setIsLoading(false)
+            })
+            .catch(err => { setError(err); setIsLoading(false) })
+            .finally(_ => setIsLoading(false))
+
     }, [id])
 
-    return { exams, isLoading }
+    return { exams, isLoading, error }
 }
 
 export default useUserExams;

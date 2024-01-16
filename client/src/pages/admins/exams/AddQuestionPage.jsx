@@ -17,8 +17,9 @@ import {
 } from '@chakra-ui/react';
 import { useExams } from 'hooks/exams';
 import addQuestion from 'services/questions/addQuestion';
-
+import { useParams } from 'react-router';
 const AddQuestionPage = () => {
+    const { id: examId } = useParams();
     const { exams } = useExams();
     const toast = useToast();
     const validationSchema = Yup.object({
@@ -39,7 +40,7 @@ const AddQuestionPage = () => {
     const initialValues = {
         name: '',
         description: '',
-        exam: '',
+        exam: examId,
         response: {
             a: '',
             b: '',
@@ -62,8 +63,8 @@ const AddQuestionPage = () => {
             resetForm();
         } catch (err) {
             toast({
-                title: 'Question created.',
-                description: "We've created your Question for you.",
+                title: 'An error occurred.',
+                description: err?.message,
                 status: 'error',
                 duration: 3000,
                 isClosable: true,

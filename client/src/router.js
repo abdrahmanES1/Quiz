@@ -18,6 +18,7 @@ import Dashboard from './pages/students/StudentDashboard';
 import TakeExam from './pages/students/TakeExam';
 import AdminDashboard from './pages/admins/AdminDashboard';
 import AddQuestionPage from './pages/admins/exams/AddQuestionPage';
+import ExamPage from 'pages/admins/exams/ExamPage';
 
 
 const router = createBrowserRouter([
@@ -59,7 +60,17 @@ const router = createBrowserRouter([
             },
             {
                 path: '/admin/exams',
-                element: <ExamsPage />
+                children: [
+                    {
+                        path: "",
+                        element: <ExamsPage />
+                    },
+                    {
+                        path: ":id",
+                        element: <ExamPage />
+                    },
+                ]
+                
             },
             // only for teachers
             {
