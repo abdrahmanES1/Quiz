@@ -8,6 +8,9 @@ import ProfileSideBare from '../../components/ui/ProfileSideBare';
 import ExamCardSkeleton from '../../components/ui/ExamCardSkeleton';
 import UserProfileSideBareSkeleton from '../../components/ui/ProfileSideBareSkeleton';
 import ResultCard from '../../components/ui/ResultCard'
+import UserProfileSideBareSkeleton from '../../components/sekeltons/ProfileSideBareSkeleton';
+import ListExamsCardsSekeltons from 'components/sekeltons/ListExamsCardsSekeltons';
+
 function StudentDashboard() {
     const user = useAuthStore(state => state.user);
     const { exams, isLoading } = useUserExams(user?._id)
@@ -21,9 +24,7 @@ function StudentDashboard() {
                 <GridItem>
                     <Heading mb={3}>Upcoming exams</Heading>
                     <SimpleGrid columns={{ sm: 2, md: 3 }} gap={2}>
-                        {isLoading ? Array(4).fill('').map((_, index) => <ExamCardSkeleton key={index} />) : null}
-
-                        {exams.map(exam => (
+                        {isLoading === true ? <ListExamsCardsSekeltons /> : exams.map(exam => (
                             <ExamCard key={exam._id} {...exam} />
                         ))}
                     </SimpleGrid>

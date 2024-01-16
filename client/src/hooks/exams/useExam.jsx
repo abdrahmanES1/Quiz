@@ -9,8 +9,8 @@ function useExam(id) {
     useEffect(() => {
         const getData = async () => {
             setIsLoading(true)
-            await getExamById(id).then(res => setExam(res))
-                .catch(err => setError(err))
+            await getExamById(id).then(res => { setExam(res); setIsLoading(false) })
+                .catch(err => { setError(err); setIsLoading(false) })
                 .finally(() => setIsLoading(false))
 
         }
