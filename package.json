@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@chakra-ui/icons": "^2.1.1",
     "ansis": "^2.0.3",
     "bcrypt": "^5.1.1",
     "concurrently": "^8.2.2",
