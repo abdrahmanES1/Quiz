@@ -4,8 +4,8 @@ import React from 'react'
 import { Container, Grid, GridItem, Heading, SimpleGrid } from '@chakra-ui/react';
 import ExamCard from '../../components/ui/ExamCard';
 import ProfileSideBare from '../../components/ui/ProfileSideBare';
-import ExamCardSkeleton from '../../components/ui/ExamCardSkeleton';
-import UserProfileSideBareSkeleton from '../../components/ui/ProfileSideBareSkeleton';
+import ExamCardSkeleton from '../../components/sekeltons/ExamCardSkeleton';
+import UserProfileSideBareSkeleton from '../../components/sekeltons/ProfileSideBareSkeleton';
 function AdminDashboard() {
     const user = useAuthStore(state => state.user);
     const { exams, isLoading } = useUserExams(user?._id)

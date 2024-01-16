@@ -1,16 +1,26 @@
 import { useEffect, useState } from 'react'
-import  getExamResults  from "../../services/results/getExamResults"
+import getExamResults from "../../services/results/getExamResults"
 
-function useExamResults(id){
+function useExamResults(id) {
     const [isLoading, setIsLoading] = useState(false);
     const [results, setResults] = useState([]);
-
+    const [error, setError] = useState(null);
     useEffect(() => {
         setIsLoading(true);
-        getExamResults(id).then(results => setResults(results)).finally(_ => setIsLoading(false))
+        getExamResults(id)
+            .then(results => {
+                setResults(results)
+                setIsLoading(false)
+            })
+            .catch(err => {
+                setError(err)
+                setIsLoading(false)
+            })
+            .finally(_ => setIsLoading(false))
         setIsLoading(false);
     }, [id])
-    return { results, isLoading }
+    return { results, isLoading, error }
+
 }
 
 export default useExamResults;

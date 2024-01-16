@@ -22,7 +22,7 @@ function UserProfileSideBare({ firstname, lastname, email, role, major }) {
         <Text>Email : {email}</Text>
         <Spacer />
         <Text fontSize="lg" fontWeight="bold">
-          Major : <Text> {major?.name || 'N/A'}</Text>
+          Major :  {major?.name || 'N/A'}
         </Text>
 
       </VStack>

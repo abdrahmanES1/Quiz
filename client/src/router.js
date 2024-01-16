@@ -17,6 +17,8 @@ import StudentsLayout from './layouts/StudentsLayout';
 import Dashboard from './pages/students/StudentDashboard';
 import TakeExam from './pages/students/TakeExam';
 import AdminDashboard from './pages/admins/AdminDashboard';
+import AddQuestionPage from './pages/admins/exams/AddQuestionPage';
+import ExamPage from 'pages/admins/exams/ExamPage';
 
 import ExamResultPage from './pages/ExamResultsPAge'
 
@@ -38,6 +40,7 @@ const router = createBrowserRouter([
                 element: <NotFound />
             },
             // for testing
+            // for admins
             {
                 path: '/admin/majors',
                 children: [
@@ -64,16 +67,22 @@ const router = createBrowserRouter([
                         path: "",
                         element: <ExamsPage />
                     },
-                    // {
-                    //     path: ":id",
-                    //     element: <ExamPage />
-                    // },
+                     {
+                         path: ":id",
+                         element: <ExamPage />
+                    },
                     {
                         path: ":id/results",
                         element: <ExamResultPage />
                     }
                 ]
+               
                 
+            },
+            // only for teachers
+            {
+                path: '/admin/exams/:id/questions/add',
+                element: <AddQuestionPage />
             },
         ]
     },
