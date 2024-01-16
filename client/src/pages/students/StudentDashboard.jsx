@@ -8,7 +8,6 @@ import ProfileSideBare from '../../components/ui/ProfileSideBare';
 import ExamCardSkeleton from '../../components/ui/ExamCardSkeleton';
 import UserProfileSideBareSkeleton from '../../components/ui/ProfileSideBareSkeleton';
 import ResultCard from '../../components/ui/ResultCard'
-import UserProfileSideBareSkeleton from '../../components/sekeltons/ProfileSideBareSkeleton';
 import ListExamsCardsSekeltons from 'components/sekeltons/ListExamsCardsSekeltons';
 
 function StudentDashboard() {
