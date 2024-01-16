@@ -72,4 +72,3 @@ const createResult = asyncHandler(async (req, res, next) => {
 
 
 module.exports = { getAllResultsForExam, getResultsForStudent, deleteResult, modifyResult, createResult };
-

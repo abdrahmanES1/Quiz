@@ -20,6 +20,8 @@ import AdminDashboard from './pages/admins/AdminDashboard';
 import AddQuestionPage from './pages/admins/exams/AddQuestionPage';
 import ExamPage from 'pages/admins/exams/ExamPage';
 
+import ExamResultPage from './pages/ExamResultsPAge'
+
 
 const router = createBrowserRouter([
     {
@@ -65,11 +67,16 @@ const router = createBrowserRouter([
                         path: "",
                         element: <ExamsPage />
                     },
-                    {
-                        path: ":id",
-                        element: <ExamPage />
+                     {
+                         path: ":id",
+                         element: <ExamPage />
                     },
+                    {
+                        path: ":id/results",
+                        element: <ExamResultPage />
+                    }
                 ]
+               
                 
             },
             // only for teachers

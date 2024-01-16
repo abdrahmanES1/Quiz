@@ -20,6 +20,7 @@ function useExamResults(id) {
         setIsLoading(false);
     }, [id])
     return { results, isLoading, error }
+
 }
 
 export default useExamResults;
