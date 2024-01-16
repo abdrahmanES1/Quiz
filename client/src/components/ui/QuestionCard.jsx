@@ -16,7 +16,7 @@ function QuestionCard({ question }) {
         } catch (err) {
             toast({
                 title: 'An error occurred.',
-                description: err?.message,
+                description: err?.response.data.message,
                 status: 'error',
                 duration: 3000,
                 isClosable: true,
@@ -40,7 +40,7 @@ function QuestionCard({ question }) {
             </VStack>
             <VStack mt={2} align="start">
                 <Text>Created At: {new Date(question.createdAt).toUTCString()}</Text>
-                <Text>Updated At: {question.updatedAt}</Text>
+                <Text>Updated At: {new Date(question.updatedAt).toUTCString()}</Text>
             </VStack>
 
             {/* You can handle the deletion logic here or navigate to another page */}

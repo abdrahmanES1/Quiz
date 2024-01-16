@@ -7,6 +7,8 @@ import useMajorStore from '../../features/majors/useMajorStore';
 
 function AddMajorModal({ isOpen, onOpen, onClose }) {
   const addMajor = useMajorStore(state => state.addMajor);
+  const isLoading = useMajorStore(state => state.isLoading);
+
   const initialValues = {
     name: '',
   };
@@ -18,7 +20,7 @@ function AddMajorModal({ isOpen, onOpen, onClose }) {
   const handleSubmit = async (values) => {
     const { name } = values;
     const res = await addMajor({ name })
-    if(res) onClose()
+    if (res) onClose()
   };
   return (
     <>
@@ -58,7 +60,7 @@ function AddMajorModal({ isOpen, onOpen, onClose }) {
                   <Button colorScheme='red' mr={3} onClick={onClose}>
                     Close
                   </Button>
-                  <Button type='submit' colorScheme='green'>Save</Button>
+                  <Button type='submit' isLoading={isLoading} colorScheme='green'>Save</Button>
                 </ModalFooter>
               </Form>
             </Formik>

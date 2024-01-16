@@ -27,7 +27,7 @@ function ResultCard({ exam, grade }) {
           </Box>
           <Box color='gray.600' fontSize='sm' fontWeight='semibold'>
             Grade:
-            <Badge borderRadius='full' px='3' ml={4} colorScheme={grade < 30 ? 'red' : grade < 50 ? "orange" : "teal"}>
+            <Badge borderRadius='full' px='3' ml={4} colorScheme={grade < 5 ? 'red' : grade < 10 ? "orange" : "teal"}>
               {grade}
             </Badge>
           </Box>

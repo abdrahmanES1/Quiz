@@ -12,7 +12,7 @@ function useMajorById(id) {
             setMajor(res)
             setIsLoading(false);
         })
-            .catch(err => { setError(err); setIsLoading(false) })
+            .catch(err => { setError(err?.response.data.message); setIsLoading(false) })
 
     }, [id])
 

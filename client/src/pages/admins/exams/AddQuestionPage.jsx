@@ -64,7 +64,7 @@ const AddQuestionPage = () => {
         } catch (err) {
             toast({
                 title: 'An error occurred.',
-                description: err?.message,
+                description: err?.response.data.message,
                 status: 'error',
                 duration: 3000,
                 isClosable: true,

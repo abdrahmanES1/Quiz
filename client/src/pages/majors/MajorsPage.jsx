@@ -51,13 +51,6 @@ const MajorsPage = () => {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {isLoading ? <Tr>
-                            <Td><Skeleton height='25px' /></Td>
-                            <Td><Skeleton height='25px' /></Td>
-                            <Td><Skeleton height='25px' /></Td>
-                        </Tr>
-                            :
-                            ""}
                         {majors?.length > 0 ? (
                             majors.map((major) => (
                                 <Tr key={major._id} >
@@ -78,6 +71,13 @@ const MajorsPage = () => {
                                     </Td>
                                 </Tr>
                             ))) : ""}
+                        {isLoading ? <Tr>
+                            <Td><Skeleton height='25px' /></Td>
+                            <Td><Skeleton height='25px' /></Td>
+                            <Td><Skeleton height='25px' /></Td>
+                        </Tr>
+                            :
+                            ""}
                     </Tbody>
                     <Tfoot>
                         <Tr>

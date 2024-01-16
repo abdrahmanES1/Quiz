@@ -13,7 +13,7 @@ function useExamResults(id) {
                 setIsLoading(false)
             })
             .catch(err => {
-                setError(err)
+                setError(err?.response.data.message)
                 setIsLoading(false)
             })
             .finally(_ => setIsLoading(false))

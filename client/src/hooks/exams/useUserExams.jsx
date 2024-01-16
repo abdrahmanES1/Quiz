@@ -11,7 +11,7 @@ function useUserExams(id) {
                 setExams(exams);
                 setIsLoading(false)
             })
-            .catch(err => { setError(err); setIsLoading(false) })
+            .catch(err => { setError(err?.response.data.message); setIsLoading(false) })
             .finally(_ => setIsLoading(false))
 
     }, [id])

@@ -4,10 +4,10 @@ import useMajorStore from '../../features/majors/useMajorStore';
 
 function DeleteMajorModal({ isOpen, onOpen, onClose, id }) {
     const deleteMajor = useMajorStore(state => state.deleteMajor)
-
+    const isLoading = useMajorStore(state => state.isLoading);
     const handleSubmit = async () => {
         const res = await deleteMajor(id);
-        if(res) onClose()
+        if (res) onClose()
     };
     return (
         <>
@@ -25,7 +25,7 @@ function DeleteMajorModal({ isOpen, onOpen, onClose, id }) {
                         Are you sure ?
                     </ModalBody>
                     <ModalFooter>
-                        <Button type='submit' mr={3} onClick={handleSubmit} colorScheme='green'>Yes</Button>
+                        <Button type='submit' mr={3} onClick={handleSubmit} isLoading={isLoading} colorScheme='green'>Yes</Button>
                         <Button colorScheme='red' onClick={onClose}>
                             No
                         </Button>

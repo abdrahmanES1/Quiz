@@ -139,7 +139,7 @@ const Login = () => {
                                     </Button>
                                 </HStack>
                                 <Stack spacing="6">
-                                    <Button type="submit" disabled={isLoading}>Sign in</Button>
+                                    <Button type="submit" isLoading={isLoading}>Sign in</Button>
                                 </Stack>
                             </Form>
                         </Formik>

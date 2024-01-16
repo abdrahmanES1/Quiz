@@ -10,7 +10,7 @@ function useExam(id) {
         const getData = async () => {
             setIsLoading(true)
             await getExamById(id).then(res => { setExam(res); setIsLoading(false) })
-                .catch(err => { setError(err); setIsLoading(false) })
+                .catch(err => { setError(err?.response.data.message); setIsLoading(false) })
                 .finally(() => setIsLoading(false))
 
         }

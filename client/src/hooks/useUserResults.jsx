@@ -12,7 +12,7 @@ function useUserResults(id) {
                 setResults(results)
                 setIsLoading(false)
             }).catch(err => {
-                setError(err.message)
+                setError(err?.response.data.message)
                 setIsLoading(false)
             })
             .finally(_ => setIsLoading(false))

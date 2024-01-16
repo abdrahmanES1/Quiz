@@ -6,6 +6,7 @@ import useMajorStore from '../../features/majors/useMajorStore';
 
 function EditeMajorModal({ isOpen, onOpen, onClose, id }) {
     const updateMajor = useMajorStore(state => state.updateMajor);
+    const isLoading = useMajorStore(state => state.isLoading);
     const initialValues = {
         name: '',
     };
@@ -54,7 +55,7 @@ function EditeMajorModal({ isOpen, onOpen, onClose, id }) {
                                     </FormControl>
                                 </Stack>
                                 <ModalFooter>
-                                    <Button type='submit' mr={3} colorScheme='green'>Update</Button>
+                                    <Button type='submit' mr={3} isLoading={isLoading} colorScheme='green'>Update</Button>
                                     <Button colorScheme='red' onClick={onClose}>
                                         Close
                                     </Button>

@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useExam from '../../hooks/exams/useExam';
 import React from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import {
   Container,
   Box,
@@ -11,20 +11,25 @@ import {
   Badge,
   Skeleton,
   Center,
+  useToast,
 } from '@chakra-ui/react';
 import isResponsesCorrect from '../../helpers/isResponsesCorrect';
 import ShowResponse from '../../components/ui/ShowResponse';
+import addResult from 'services/results/addResult';
+import useAuthStore from 'features/auth/authStore';
 
 function TakeExam() {
   const { id } = useParams();
-  const { exam, isLoading, error } = useExam(id);
+  const userId = useAuthStore(state => state?.user._id)
+  const toast = useToast()
+  const navigate = useNavigate()
+  const { exam, isLoading } = useExam(id);
   const [current, setCurrent] = useState(0);
   const [exit, setExit] = useState(false)
   const [examResult, setExamResult] = useState(0);
   const [selectedOptions, setSelectedOptions] = useState([]);
-
+  let result = useRef(0);
   const saveHandler = () => {
-
     // check if the answers are correct
     if (isResponsesCorrect(exam?.questions[current]?.response.correct, selectedOptions)) {
       setExamResult((result) => result + 1);
@@ -48,21 +53,31 @@ function TakeExam() {
   };
 
   const handleSubmit = async () => {
-    if (exit === true) {
-      let result = (examResult / exam?.questions?.length) * 100;
-      console.log("resutl" + result);
-      console.log("examResult" + examResult);
-      return;
+    try {
+      await addResult(id, userId, result.current)
+      toast({
+        title: 'Result created.',
+        description: "We've saved your Result for you.",
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      })
+      navigate(-1);
+    } catch (err) {
+      console.log(err);
+      toast({
+        title: 'An error occurred.',
+        description: err?.response.data.message,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      })
     }
-    /// TODO : Show a Modal for result
-
-    /// and save the result 
-    //  saveResult(id, connectedUserId)
   }
 
   useEffect(() => {
-
-  }, [exit])
+    result.current = (examResult / exam?.questions?.length) * 10;
+  }, [examResult, exam?.questions?.length]);
 
   return (
     <Container maxW="xxl" p={5}>

@@ -22,7 +22,7 @@ function ExamPage() {
     return (
         <Container maxW="xxl" my={5}>
             <HStack justifyContent="space-between">
-                <Box>
+                <Box flexGrow={1}>
                     {isLoading ? <Skeleton mt='4' height='4' />
                         : (
                             <>
@@ -31,9 +31,16 @@ function ExamPage() {
                             </>
                         )}
                 </Box>
-                <Button as={Link} to={"/admin/exams/" + id + "/questions/add"} colorScheme="blue">
-                    Add Question
-                </Button>
+                <Box flexGrow={0} maxW="50%">
+
+                    <Button as={Link} mr={2} mb={{ base: 2, sm: 0 }} to={"/admin/exams/" + id + "/questions/add"} colorScheme="blue">
+                        Add Question
+                    </Button>
+                    <Button as={Link} to={"/admin/exams/" + id + "/results"} colorScheme="blue">
+                        show Results
+                    </Button>
+                </Box>
+                {/* TODO: add Link to exam results */}
             </HStack>
 
 

@@ -8,6 +8,7 @@ const ResultSchema = new Schema({
     createdBy: { type: Schema.ObjectId, ref: "User", required: [true, "Provide the creator id"] }
 }, { timestamps: true })
 
+ResultSchema.index({ exam: 1, user: 1 }, { unique: true })
 
 const Result = model("Result", ResultSchema);
 
