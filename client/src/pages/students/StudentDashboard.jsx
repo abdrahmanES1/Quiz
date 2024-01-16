@@ -10,8 +10,8 @@ import UserProfileSideBareSkeleton from '../../components/ui/ProfileSideBareSkel
 import ResultCard from '../../components/ui/ResultCard'
 function StudentDashboard() {
     const user = useAuthStore(state => state.user);
-    const { exams, isLoading } = useUserExams(user?._id)
-    const { results, isLoading1 } = useUserResults(user?._id)
+    const { exams, isLoading } = useUserExams(user?._id);
+    const { results, isLoading1 } = useUserResults(user?._id);
     return (
         <Container maxW="100%" size="xxl" p={5}>
             <Grid templateColumns={{ base: '1fr', md: '1fr 3fr' }} gap={2}>
