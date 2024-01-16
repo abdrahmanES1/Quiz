@@ -3,14 +3,14 @@ import { Button, Skeleton, Box, Heading, Table, TableCaption, Thead, Tr, Th, Tbo
 import { Link } from 'react-router-dom';
 import { FaEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { useExamResults } from '../hooks/exams/useExamResults'
+import  useExamResults  from '../hooks/exams/useExamResults'
 const ExamResultsPage = () => {
     const { id } = useParams();
     const { results, isLoading } = useExamResults(id);
     return (
         <Box textAlign="center" padding="6" margin="auto">
             <Heading as="h2" size="xl" mb="4">
-                
+                All Students grades
             </Heading>
 
             <TableContainer>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getExamResults } from "../../services/results/getExamResults"
+import  getExamResults  from "../../services/results/getExamResults"
 
 function useExamResults(id){
     const [isLoading, setIsLoading] = useState(false);
