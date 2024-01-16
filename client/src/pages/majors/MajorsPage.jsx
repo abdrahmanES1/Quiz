@@ -1,5 +1,5 @@
 import React from 'react';
-import { Skeleton, Box, Heading, Table, TableCaption, Thead, Tr, Th, Tbody, Td, TableContainer, Tfoot, Button } from '@chakra-ui/react';
+import { Skeleton, Box, Heading, Table, TableCaption, Thead, Tr, Th, Tbody, Td, TableContainer, Tfoot, Button, HStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { FaEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
@@ -10,7 +10,7 @@ import { MdEdit } from "react-icons/md";
 import DeleteMajorModal from '../../components/modals/DeleteMajorModel';
 import EditeMajorModal from '../../components/modals/EditeMajorModal';
 import useMajorStore from '../../features/majors/useMajorStore';
-
+//TODO : migrate to @chakraui/icons
 const MajorsPage = () => {
     const { majors, isLoading } = useMajors()
     // const majors = useMajorStore(state => state.majors)
@@ -22,10 +22,12 @@ const MajorsPage = () => {
 
     return (
         <Box textAlign="center" padding="6" margin="auto">
-            <Heading as="h2" size="xl" mb="4">
-                All majors
-            </Heading>
-            <Button colorScheme="blue" onClick={onOpen} alignSelf="right" >Add Major</Button>
+            <HStack justifyContent="space-between">
+                <Heading as="h2" size="xl" mb="4">
+                    All majors
+                </Heading>
+                <Button colorScheme="blue" onClick={onOpen} alignSelf="right" >Add Major</Button>
+            </HStack>
             <AddMajorModal onClose={onClose} onOpen={onOpen} isOpen={isOpen} />
             <TableContainer>
                 <Table variant='striped' colorScheme='gray'>
