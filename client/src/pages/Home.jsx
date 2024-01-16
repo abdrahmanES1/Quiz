@@ -5,19 +5,9 @@ import {
   Heading,
   Text,
   Button,
-  Stack,
-  Grid,
   Image,
   VStack,
-  Icon,
-  // Carousel,
-  useDisclosure,
-  Modal,
-  CloseButton,
   Flex,
-  Avatar,
-  Textarea,
-  GridItem
 } from "@chakra-ui/react";
 function Home() {
   return (
@@ -43,7 +33,7 @@ function Home() {
           <Heading as="h3" fontSize="3xl" textAlign="center" mb={6}>
             Dashboard Capabilities
           </Heading>
-          <Flex align="center" justify="center">
+          <Flex align="center" justify="center"  flexDirection={{ base: "column", md: "row", }}>
             <Box maxW="sm" mx={4} textAlign="center" >
               <Image borderRadius={8} src="https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Feature 1" mb={4} />
               <Text fontWeight="semibold">Upcoming Exams for Students</Text>
