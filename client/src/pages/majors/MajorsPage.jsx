@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Skeleton, Box, Heading, Table, TableCaption, Thead, Tr, Th, Tbody, Td, TableContainer, Tfoot, Button, HStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { FaEye } from "react-icons/fa";
@@ -19,7 +19,16 @@ const MajorsPage = () => {
     const { isOpen: isEditOpen, onOpen: onEditOpen, onClose: onEditClose } = useDisclosure()
     const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onClose: onDeleteClose } = useDisclosure()
 
-
+    const [SelectedId, setSelectedId] = useState(null);
+    const handleIdChange = (id, target) => {
+        setSelectedId(id)
+        if (target === "edit") {
+            onEditOpen()
+        }
+        if (target === "delete") {
+            onDeleteOpen()
+        }
+    }
     return (
         <Box textAlign="center" padding="6" margin="auto">
             <HStack justifyContent="space-between">
@@ -29,13 +38,15 @@ const MajorsPage = () => {
                 <Button colorScheme="blue" onClick={onOpen} alignSelf="right" >Add Major</Button>
             </HStack>
             <AddMajorModal onClose={onClose} onOpen={onOpen} isOpen={isOpen} />
+            <DeleteMajorModal onClose={onDeleteClose} onOpen={onDeleteOpen} isOpen={isDeleteOpen} id={SelectedId} />
+            <EditeMajorModal onClose={onEditClose} onOpen={onEditOpen} isOpen={isEditOpen} id={SelectedId} />
+
             <TableContainer>
                 <Table variant='striped' colorScheme='gray'>
                     <TableCaption>{majors?.length === 0 ? "No data" : ""}</TableCaption>
                     <Thead>
                         <Tr>
                             <Th>name</Th>
-
                             <Th></Th>
                         </Tr>
                     </Thead>
@@ -49,23 +60,20 @@ const MajorsPage = () => {
                             ""}
                         {majors?.length > 0 ? (
                             majors.map((major) => (
-                                <Tr key={major._id}  >
-
+                                <Tr key={major._id} >
                                     <Td>{major?.name}</Td>
                                     <Td >
-                                        <Button size='sm' marginEnd={2} colorScheme="green" as={Link} onClick={onEditOpen} >
-                                            {/* TODO : EDIT LOGI */}
-                                            <MdEdit />
-                                        </Button>
-                                        <EditeMajorModal onClose={onEditClose} onOpen={onEditOpen} isOpen={isEditOpen} id={major._id} />
                                         <Button size='sm' colorScheme="blue" marginEnd={2} as={Link} to={`/admin/majors/${major._id}`}>
                                             <FaEye />
                                         </Button>
-                                        {/* //TODO: ADD delete Major logic */}
-                                        <Button size='sm' colorScheme="red" as={Link} onClick={onDeleteOpen}>
+
+                                        <Button size='sm' marginEnd={2} colorScheme="green" onClick={() => handleIdChange(major._id, "edit")} >
+                                            <MdEdit />
+                                        </Button>
+
+                                        <Button size='sm' colorScheme="red" onClick={() => handleIdChange(major._id, "delete")}>
                                             <MdDelete />
                                         </Button>
-                                        <DeleteMajorModal onClose={onDeleteClose} onOpen={onDeleteOpen} isOpen={isDeleteOpen} id={major._id} />
 
                                     </Td>
                                 </Tr>
