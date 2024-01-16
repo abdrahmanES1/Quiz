@@ -1,6 +1,3 @@
-import useAuthStore from '../../features/auth/authStore'
-import useUserExams from '../../hooks/exams/useUserExams';
-import useUserResults from '../../hooks/useUserResults'
 import React from 'react'
 import { Container, Grid, GridItem, Heading, SimpleGrid, Box } from '@chakra-ui/react';
 import ExamCard from '../../components/ui/ExamCard';
@@ -8,7 +5,9 @@ import ProfileSideBare from '../../components/ui/ProfileSideBare';
 import UserProfileSideBareSkeleton from '../../components/sekeltons/ProfileSideBareSkeleton';
 import ListExamsCardsSekeltons from 'components/sekeltons/ListExamsCardsSekeltons';
 import ResultCard from 'components/ui/ResultCard'
-import useUserResults from 'hooks/useUserResults'
+import useAuthStore from '../../features/auth/authStore'
+import useUserExams from '../../hooks/exams/useUserExams';
+import useUserResults from '../../hooks/useUserResults'
 
 function StudentDashboard() {
     const user = useAuthStore(state => state.user);
