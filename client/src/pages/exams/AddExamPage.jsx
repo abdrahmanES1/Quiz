@@ -23,19 +23,25 @@ function AddExamPage() {
     const { majors } = useMajors()
     const user = useAuthStore(state => state.user)
     const toast = useToast()
-
+    const date = new Date();
+    let initialValues = {
+        name: '',
+        description: '',
+        major: '',
+        deadline: date.toISOString().split('T')[0]
+    }
+    
     const ExamSchema = Yup.object({
         name: Yup.string().required('Exam name is required'),
         description: Yup.string().required('Exam description is required'),
-        major: Yup.string().required('Major ID is required'),
+        major: Yup.string().required('Major is required'),
+        deadline: Yup.date().required('Deadline is required').min(date.toISOString(), "deadline must be in the future")
     });
-
     const handleSubmit = async (values, { resetForm }) => {
-        const { name, description, major } = values
-        // Handle form submission here (e.g., send data to the server)
-        console.log(values);
+        const { name, description, major, deadline } = values
+
         try {
-            await AddExam({ name, description, major, createdBy: user?._id })
+            await AddExam({ name, description, major, createdBy: user?._id, deadline })
             setIsLoading(false)
             toast({
                 title: 'Exam created.',
@@ -67,11 +73,7 @@ function AddExamPage() {
         <Container maxW="xxl">
             <Box p={4}>
                 <Formik
-                    initialValues={{
-                        name: '',
-                        description: '',
-                        major: '',
-                    }}
+                    initialValues={initialValues}
                     validationSchema={ExamSchema}
                     onSubmit={handleSubmit}
                 >
@@ -105,6 +107,13 @@ function AddExamPage() {
                             </Field>
                             <Text color="red.500" fontSize="sm">
                                 <ErrorMessage name="major" />
+                            </Text>
+                        </FormControl>
+                        <FormControl id="deadline" mb={4}>
+                            <FormLabel>Deadline</FormLabel>
+                            <Field as={Input} type="date" name="deadline" />
+                            <Text color="red.500" fontSize="sm">
+                                <ErrorMessage name="deadline" />
                             </Text>
                         </FormControl>
 

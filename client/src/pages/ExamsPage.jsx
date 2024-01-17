@@ -26,6 +26,7 @@ const ExamsPage = () => {
                         <Tr>
                             <Th>Name</Th>
                             <Th>Description</Th>
+                            <Th>Deadline</Th>
                             <Th>Questions</Th>
                         </Tr>
                     </Thead>
@@ -43,6 +44,7 @@ const ExamsPage = () => {
                                 <Tr key={exam._id} >
                                     <Td>{exam?.name}</Td>
                                     <Td>{exam?.description}</Td>
+                                    <Td>{exam?.deadline}</Td>
                                     <Td >
                                         <Button size='sm' colorScheme="blue" marginEnd={2} as={Link} to={`/admin/exams/${exam._id}`}>
                                             <InfoIcon />
@@ -58,6 +60,7 @@ const ExamsPage = () => {
                         <Tr>
                             <Th>Name</Th>
                             <Th>Description</Th>
+                            <Td>Deadline</Td>
                             <Th>Questions</Th>
                         </Tr>
                     </Tfoot>
