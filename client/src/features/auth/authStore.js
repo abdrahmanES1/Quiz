@@ -5,12 +5,11 @@ import axiosInstance from "../../utils/axiosInstance";
 export const useAuthStore = create(devtools(persist((set, get) => ({
     token: localStorage.getItem('token'),
     isAuthenticated: false,
-    isLoading: true,
+    isLoading: false,
     user: null,
     error: null,
 
     register: async ({ firstname, lastname, email, password }) => {
-        console.log({ firstname, lastname, email, password });
         set({ error: null })
         try {
             set({ isLoading: true })
@@ -25,7 +24,7 @@ export const useAuthStore = create(devtools(persist((set, get) => ({
             set({ user: await response.data.user, isAuthenticated: true })
             return response.data
         } catch (err) {
-            set({ error: err?.response?.data?.message })
+            set({ error: err?.response?.data?.message, isLoading: false })
         } finally {
             set({ isLoading: false })
         }
@@ -40,7 +39,7 @@ export const useAuthStore = create(devtools(persist((set, get) => ({
             await get().getMe(get().token);
             return response.data
         } catch (err) {
-            set({ error: err?.response?.data?.message })
+            set({ error: err?.response?.data?.message, isLoading: false })
         } finally {
             set({ isLoading: false })
         }
@@ -68,7 +67,7 @@ export const useAuthStore = create(devtools(persist((set, get) => ({
             })
             set({ user: await response.data.user, isAuthenticated: true })
         } catch (err) {
-            set({ error: err?.response?.data?.message })
+            set({ error: err?.response?.data?.message, isLoading: false })
         } finally {
             set({ isLoading: false })
         }
