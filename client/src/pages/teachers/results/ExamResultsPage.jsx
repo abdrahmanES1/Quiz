@@ -1,7 +1,7 @@
 import { useParams } from 'react-router'
 import {  Skeleton, Box, Heading, Table, TableCaption, Thead, Tr, Th, Tbody, Td, TableContainer, Tfoot } from '@chakra-ui/react';
 
-import  useExamResults  from '../hooks/exams/useExamResults'
+import  useExamResults  from '../../../hooks/exams/useExamResults'
 const ExamResultsPage = () => {
     const { id } = useParams();
     const { results, isLoading } = useExamResults(id);

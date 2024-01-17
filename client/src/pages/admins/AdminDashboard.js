@@ -1,8 +1,8 @@
 import useAuthStore from '../../features/auth/authStore'
-import React from 'react'
+import React, { lazy } from 'react'
 import { Container, Grid, GridItem, Heading } from '@chakra-ui/react';
-import ProfileSideBare from '../../components/ui/ProfileSideBare';
 import UserProfileSideBareSkeleton from '../../components/sekeltons/ProfileSideBareSkeleton';
+const ProfileSideBare = lazy(() => import('../../components/ui/ProfileSideBare'));
 function AdminDashboard() {
     const user = useAuthStore(state => state.user);
     return (

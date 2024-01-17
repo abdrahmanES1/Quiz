@@ -3,7 +3,7 @@ import { useParams } from 'react-router'
 import React from 'react';
 import { Skeleton, Box, Heading, Table, TableCaption, Thead, Tr, Th, Tbody, Td, TableContainer, Tfoot, Button, HStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import { useMajorById } from '../../hooks/majors';
+import { useMajorById } from '../../../hooks/majors';
 
 import { InfoIcon, DeleteIcon } from "@chakra-ui/icons";
 

@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { lazy, useState } from 'react';
 import { Skeleton, Box, Heading, Table, TableCaption, Thead, Tr, Th, Tbody, Td, TableContainer, Tfoot, Button, HStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { InfoIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { useDisclosure } from '@chakra-ui/react';
-import AddMajorModal from '../../components/modals/AddMajorModal';
-import { useMajors } from '../../hooks/majors';
-import DeleteMajorModal from '../../components/modals/DeleteMajorModel';
-import EditeMajorModal from '../../components/modals/EditeMajorModal';
+import { useMajors } from '../../../hooks/majors';
+const AddMajorModal = lazy(() => import('../../../components/modals/AddMajorModal'));
+const EditeMajorModal = lazy(() => import('../../../components/modals/EditeMajorModal'));
+const DeleteMajorModal = lazy(() => import('../../../components/modals/DeleteMajorModel'));
 
 const MajorsPage = () => {
     const { majors, isLoading } = useMajors()

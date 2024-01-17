@@ -15,7 +15,7 @@ function TeachersLayout() {
           <Outlet />
         </>
         :
-        <Navigate to="/admin/login" />
+        <Navigate to="/login" />
       }
     </>
   )

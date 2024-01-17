@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Skeleton, Box, Heading, Table, TableCaption, Thead, Tr, Th, Tbody, Td, TableContainer, Tfoot, HStack } from '@chakra-ui/react';
-import { useExams } from '../hooks/exams/index';
+import { useExams } from '../../../hooks/exams/index';
 import { Link } from 'react-router-dom';
 import { InfoIcon, DeleteIcon } from "@chakra-ui/icons";
 
@@ -44,7 +44,7 @@ const ExamsPage = () => {
                                 <Tr key={exam._id} >
                                     <Td>{exam?.name}</Td>
                                     <Td>{exam?.description}</Td>
-                                    <Td>{exam?.deadline}</Td>
+                                    <Td>{new Date(exam?.deadline).toLocaleString()}</Td>
                                     <Td >
                                         <Button size='sm' colorScheme="blue" marginEnd={2} as={Link} to={`/admin/exams/${exam._id}`}>
                                             <InfoIcon />
@@ -60,7 +60,7 @@ const ExamsPage = () => {
                         <Tr>
                             <Th>Name</Th>
                             <Th>Description</Th>
-                            <Td>Deadline</Td>
+                            <Th>Deadline</Th>
                             <Th>Questions</Th>
                         </Tr>
                     </Tfoot>
