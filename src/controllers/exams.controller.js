@@ -11,7 +11,7 @@ const getAllExams = asyncHandler(async (req, res, next) => {
 
     const { populate, min, max } = req.query;
 
-    const exams = await Exam.find({}).populate(populate);
+    const exams = await Exam.find({}).populate(populate).sort({ createdAt: -1 });
     res.status(StatusCodes.OK).json({
         success: true,
         exams
@@ -82,7 +82,7 @@ const modifyExam = asyncHandler(async (req, res, next) => {
 });
 
 const addExam = asyncHandler(async (req, res, next) => {
-    const { name, description, major } = req.body;
+    const { name, description, major, deadline } = req.body;
 
     if (!await Major.findById(major)) {
         return next(new NotFoundError("No major found match this id : " + exam));
@@ -91,7 +91,8 @@ const addExam = asyncHandler(async (req, res, next) => {
     const exam = new Exam({
         name: name,
         description: description,
-        major: major
+        major: major,
+        deadline: deadline
     })
 
     await exam.save();
@@ -105,4 +106,3 @@ const addExam = asyncHandler(async (req, res, next) => {
 
 
 module.exports = { getAllExams, getExam, deleteExam, modifyExam, addExam };
-
