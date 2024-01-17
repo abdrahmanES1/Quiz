@@ -22,6 +22,7 @@ import ExamPage from 'pages/admins/exams/ExamPage';
 
 import ExamResultPage from './pages/ExamResultsPAge'
 import AddStudentsPage from 'pages/admins/AddUsersPage';
+import AddExamPage from 'pages/exams/AddExamPage';
 
 
 const router = createBrowserRouter([
@@ -75,7 +76,8 @@ const router = createBrowserRouter([
                     {
                         path: ":id/results",
                         element: <ExamResultPage />
-                    }
+                    },
+
                 ]
 
 
@@ -84,6 +86,11 @@ const router = createBrowserRouter([
             {
                 path: '/admin/exams/:id/questions/add',
                 element: <AddQuestionPage />
+            },
+            // for teachers only
+            {
+                path: "/admin/exams/add",
+                element: <AddExamPage />
             },
             // admins Only
             {

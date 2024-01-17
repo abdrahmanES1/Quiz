@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Skeleton, Box, Heading, Table, TableCaption, Thead, Tr, Th, Tbody, Td, TableContainer, Tfoot } from '@chakra-ui/react';
+import { Button, Skeleton, Box, Heading, Table, TableCaption, Thead, Tr, Th, Tbody, Td, TableContainer, Tfoot, HStack } from '@chakra-ui/react';
 import { useExams } from '../hooks/exams/index';
 import { Link } from 'react-router-dom';
 import { InfoIcon, DeleteIcon } from "@chakra-ui/icons";
@@ -9,9 +9,15 @@ const ExamsPage = () => {
 
     return (
         <Box textAlign="center" padding="6" margin="auto">
-            <Heading as="h2" size="xl" mb="4">
-                All Exams
-            </Heading>
+            <HStack justifyContent="space-between">
+                <Heading as="h2" size="xl" mb="4">
+                    All exams
+                </Heading>
+                <Button as={Link} to="add">
+                    Add Exam
+                </Button>
+            </HStack>
+
 
             <TableContainer>
                 <Table variant='striped' colorScheme='gray' >
