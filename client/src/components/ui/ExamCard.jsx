@@ -35,8 +35,8 @@ function ExamCard({ _id, name, description, deadline }) {
                             Deadline
                         </Badge>
                         <Box as='span' ml='2' color='gray.600' fontSize='sm'>
-                            {/* {deadline}  */}
-                            Now
+                            {deadline ?? "Now"}
+
                         </Box>
                     </Box>
                 </Box>
