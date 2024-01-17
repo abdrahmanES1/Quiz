@@ -6,6 +6,7 @@ const ExamSchema = new Schema({
     description: { type: String, required: [true, "Exam description required"] },
     questions: { type: [Schema.ObjectId], ref: "Question" },
     major: { type: Schema.ObjectId, ref: 'Major', required: [true, "Major id required"] },
+    deadline : { type: Date , required: [true, "Deadline is required"]},
     createdBy: { type: Schema.ObjectId, ref: "User" }
 }, { timestamps: true })
 

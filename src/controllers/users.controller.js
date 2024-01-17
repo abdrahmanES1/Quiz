@@ -72,7 +72,23 @@ const getUserExams = asyncHandler(async (req, res, next) => {
                     _id: new Types.ObjectId(id)
                 }
             },
-            { $unset: 'exams.password' }
+            { $unset: 'exams.password' },
+            {
+                $project : {
+                    exams: {$filter: {
+                        input: exams,
+                        as : exam,
+                        cond: {
+                            $gte: ['$$exam.deadline', new Date()] 
+                        }
+                    }}
+                }
+            },
+            {
+                $sort: {
+                    'exams.createdAt': -1
+                }
+            },
         ]
     );
 
