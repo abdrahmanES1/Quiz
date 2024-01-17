@@ -68,19 +68,22 @@ const Navbar = () => {
 
                                 {isAuthenticated ?
                                     <Link
-                                        to={["ADMIN", "SUPER_ADMIN", "ADMIN"].includes(userRole)
+                                        to={["ADMIN", "SUPER_ADMIN", "TEAHCER"].includes(userRole)
                                             ? "/admin/dashboard"
                                             : "/dashboard"
                                         }
                                         as={NavLink} color="white" _hover={{ textDecoration: 'none' }}>dashboard</Link>
                                     : null}
-                                {["ADMIN", "SUPER_ADMIN", "ADMIN"].includes(userRole) ?
+                                {["ADMIN", "SUPER_ADMIN", "TEAHCER"].includes(userRole) ?
                                     <>
                                         <Link as={NavLink} to="/admin/exams" color="white" _hover={{ textDecoration: 'none' }}>
                                             Exams
                                         </Link>
                                         <Link as={NavLink} to="/admin/majors" color="white" _hover={{ textDecoration: 'none' }}>
                                             Majors
+                                        </Link>
+                                        <Link as={NavLink} to="/admin/users/add" color="white" _hover={{ textDecoration: 'none' }}>
+                                            users
                                         </Link>
                                     </> : null}
 
@@ -123,6 +126,9 @@ const Navbar = () => {
                                     </Link>
                                     <Link as={NavLink} to="/admin/majors" color="white" _hover={{ textDecoration: 'none' }}>
                                         Majors
+                                    </Link>
+                                    <Link as={NavLink} to="/admin/users/add" color="white" _hover={{ textDecoration: 'none' }}>
+                                        Add users
                                     </Link>
                                 </> : null}
                         </VStack>

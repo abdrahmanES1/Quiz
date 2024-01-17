@@ -16,7 +16,7 @@ function MajorPage() {
                 <Heading as="h2" size="xl" mb="4">
                     {major?.name}
                 </Heading>
-                <Button as={Link} to={"/admin/majors/" + id + "/students/add"}>
+                <Button as={Link} to={"/admin/users/add?major=" + id}>
 
                     add Students
                 </Button>

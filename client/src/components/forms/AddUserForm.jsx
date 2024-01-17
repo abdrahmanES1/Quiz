@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { Box, Button, Center, Checkbox, Container, FormControl, FormLabel, Heading, HStack, Input, MenuOptionGroup, Select, Stack, Text, useToast } from '@chakra-ui/react';
+import { Button, FormControl, FormLabel, Input, Select, Stack, Text, useToast } from '@chakra-ui/react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Roles from 'constants/Roles';
 import addUser from 'services/users/addUser';
+import useAuthStore from 'features/auth/authStore';
 
 
 const AddStudentForm = ({ majorId }) => {
     const [isLoading, setIsLoading] = useState(false);
     const toast = useToast()
+    const userRole = useAuthStore(state => state.user?.role)
 
 
     const initialValues = {
@@ -103,9 +105,13 @@ const AddStudentForm = ({ majorId }) => {
                                 type="text"
                                 name="role"
                             >
-                                <option>{Roles.TEACHER}</option>
                                 <option>{Roles.STUDENT}</option>
-                                <option>{Roles.ADMIN}</option>
+                                {["ADMIN", "SUPER_ADMIN"].includes(userRole) ?
+                                    <>
+                                        <option>{Roles.TEACHER}</option>
+                                        <option>{Roles.ADMIN}</option>
+                                    </> :
+                                    null}
                             </Field>
                             <Text color="red.500" fontSize="sm">
                                 <ErrorMessage name="role" />

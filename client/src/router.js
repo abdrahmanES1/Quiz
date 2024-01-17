@@ -21,7 +21,7 @@ import AddQuestionPage from './pages/admins/exams/AddQuestionPage';
 import ExamPage from 'pages/admins/exams/ExamPage';
 
 import ExamResultPage from './pages/ExamResultsPAge'
-import AddStudentsPage from 'pages/admins/AddStudentsPage';
+import AddStudentsPage from 'pages/admins/AddUsersPage';
 
 
 const router = createBrowserRouter([
@@ -58,11 +58,7 @@ const router = createBrowserRouter([
                         path: ":id/users",
                         element: <MajorUsersPage />
                     },
-                    // admins Only
-                    {
-                        path: ':id/students/add',
-                        element: <AddStudentsPage />
-                    },
+
                 ]
             },
             {
@@ -88,6 +84,11 @@ const router = createBrowserRouter([
             {
                 path: '/admin/exams/:id/questions/add',
                 element: <AddQuestionPage />
+            },
+            // admins Only
+            {
+                path: '/admin/users/add',
+                element: <AddStudentsPage />
             },
 
         ]
