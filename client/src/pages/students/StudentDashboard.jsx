@@ -1,13 +1,13 @@
-import React from 'react'
+import React, { lazy } from 'react'
 import { Container, Grid, GridItem, Heading, SimpleGrid, Box } from '@chakra-ui/react';
-import ExamCard from '../../components/ui/ExamCard';
-import ProfileSideBare from '../../components/ui/ProfileSideBare';
 import UserProfileSideBareSkeleton from '../../components/sekeltons/ProfileSideBareSkeleton';
 import ListExamsCardsSekeltons from 'components/sekeltons/ListExamsCardsSekeltons';
-import ResultCard from 'components/ui/ResultCard'
 import useAuthStore from '../../features/auth/authStore'
 import useUserExams from '../../hooks/exams/useUserExams';
 import useUserResults from '../../hooks/useUserResults'
+const ResultCard = lazy(() => import('components/ui/ResultCard'));
+const ExamCard = lazy(() => import('../../components/ui/ExamCard'));
+const ProfileSideBare = lazy(() => import('../../components/ui/ProfileSideBare'));
 
 function StudentDashboard() {
     const user = useAuthStore(state => state.user);

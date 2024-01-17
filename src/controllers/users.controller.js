@@ -1,5 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const User = require('../models/users.model');
+const Exam = require('../models/exams.model');
 const NotFoundError = require('../../Errors/NotFoundError');
 const { Types } = require('mongoose');
 const { StatusCodes } = require('http-status-codes');
@@ -57,44 +58,12 @@ const modifyUser = asyncHandler(async (req, res, next) => {
 const getUserExams = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
 
-    const user = await User.aggregate(
-        [
-            {
-                $lookup: {
-                    from: 'exams',
-                    localField: 'major',
-                    foreignField: 'major',
-                    as: 'exams'
-                }
-            },
-            {
-                $match: {
-                    _id: new Types.ObjectId(id)
-                }
-            },
-            { $unset: 'exams.password' },
-            {
-                $project : {
-                    exams: {$filter: {
-                        input: exams,
-                        as : exam,
-                        cond: {
-                            $gte: ['$$exam.deadline', new Date()] 
-                        }
-                    }}
-                }
-            },
-            {
-                $sort: {
-                    'exams.createdAt': -1
-                }
-            },
-        ]
-    );
+    const user = await User.findById(id)
+    const exams = await Exam.find({ major: user.major, deadline: { $gte: Date.now() } }).sort({ createdAt: -1 })
 
     res.status(StatusCodes.OK).send({
         "success": true,
-        exams: user[0].exams
+        exams: exams
     });
 });
 

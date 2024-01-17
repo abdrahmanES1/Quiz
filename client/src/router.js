@@ -1,28 +1,26 @@
 
-import Home from './pages/Home';
-import Login from './pages/auth/Login';
-import Register from './pages/auth/Register';
-import AuthenticationLayout from './layouts/AuthenticationLayout';
-import { createBrowserRouter } from 'react-router-dom'
-import Layout from './layouts/Layout';
-import TeachersLayout from './layouts/TeachersLayout';
-import AdminLogin from './pages/auth/AdminLogin';
-import NotFound from './pages/NotFound';
-import Profile from './pages/Profile';
-import ExamsPage from './pages/ExamsPage';
-import MajorsPage from './pages/majors/MajorsPage';
-import MajorPage from './pages/majors/MajorPage';
-import MajorUsersPage from './pages/majors/MajorUsersPage';
-import StudentsLayout from './layouts/StudentsLayout';
-import Dashboard from './pages/students/StudentDashboard';
-import TakeExam from './pages/students/TakeExam';
-import AdminDashboard from './pages/admins/AdminDashboard';
-import AddQuestionPage from './pages/admins/exams/AddQuestionPage';
-import ExamPage from 'pages/admins/exams/ExamPage';
+import { lazy } from 'react';
+import { createBrowserRouter } from 'react-router-dom';
+const Home = lazy(() => import('./pages/Home'));
+const Login = lazy(() => import('./pages/auth/Login'));
+const AuthenticationLayout = lazy(() => import('./layouts/AuthenticationLayout'));
+const Layout = lazy(() => import('./layouts/Layout'));
+const TeachersLayout = lazy(() => import('./layouts/TeachersLayout'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+const ExamsPage = lazy(() => import('./pages/teachers/exams/ExamsPage'));
+const MajorsPage = lazy(() => import('./pages/admins/majors/MajorsPage'));
+const MajorPage = lazy(() => import('./pages/admins/majors/MajorPage'));
+const MajorUsersPage = lazy(() => import('./pages/admins/majors/MajorUsersPage'));
+const StudentsLayout = lazy(() => import('./layouts/StudentsLayout'));
+const Dashboard = lazy(() => import('./pages/students/StudentDashboard'));
+const TakeExam = lazy(() => import('./pages/students/TakeExam'));
+const AdminDashboard = lazy(() => import('./pages/admins/AdminDashboard'));
+const AddQuestionPage = lazy(() => import('./pages/teachers/questions/AddQuestionPage'));
+const ExamPage = lazy(() => import('pages/teachers/exams/ExamPage'));
 
-import ExamResultPage from './pages/ExamResultsPAge'
-import AddStudentsPage from 'pages/admins/AddUsersPage';
-import AddExamPage from 'pages/exams/AddExamPage';
+const ExamResultsPage = lazy(() => import('./pages/teachers/results/ExamResultsPage'));
+const AddStudentsPage = lazy(() => import('pages/admins/users/AddUsersPage'));
+const AddExamPage = lazy(() => import('pages/teachers/exams/AddExamPage'));
 
 
 const router = createBrowserRouter([
@@ -34,15 +32,30 @@ const router = createBrowserRouter([
                 element: <Home />
             },
             {
-                path: '/my-profile',
-                element: <Profile />
-            },
-            {
                 path: '*',
                 element: <NotFound />
             },
-            // for testing
-            // for admins
+
+        ]
+    },
+    {
+        element: <AuthenticationLayout />,
+        children: [
+            {
+                path: '/login',
+                element: <Login />
+            }
+        ]
+    },
+    {
+        element: <TeachersLayout />,
+        children: [
+            {
+                path: '/admin/dashboard',
+                element: <AdminDashboard />
+            },
+
+
             {
                 path: '/admin/majors',
                 children: [
@@ -70,68 +83,30 @@ const router = createBrowserRouter([
                         element: <ExamsPage />
                     },
                     {
+                        path: "/add",
+                        element: <AddExamPage />
+                    },
+                    {
                         path: ":id",
                         element: <ExamPage />
                     },
                     {
                         path: ":id/results",
-                        element: <ExamResultPage />
+                        element: <ExamResultsPage />
+                    },
+                    {
+                        path: ':id/questions/add',
+                        element: <AddQuestionPage />
                     },
 
                 ]
 
 
             },
-            // only for teachers
-            {
-                path: '/admin/exams/:id/questions/add',
-                element: <AddQuestionPage />
-            },
-            // for teachers only
-            {
-                path: "/admin/exams/add",
-                element: <AddExamPage />
-            },
-            // admins Only
             {
                 path: '/admin/users/add',
                 element: <AddStudentsPage />
             },
-
-        ]
-    },
-    {
-        element: <AuthenticationLayout />,
-        children: [
-            {
-                path: '/login',
-                element: <Login />
-            },
-            {
-                path: '/register',
-                element: <Register />
-            },
-            {
-                path: '/admin/login',
-                element: <AdminLogin />
-            }
-        ]
-    },
-    {
-        element: <TeachersLayout />,
-        children: [
-            {
-                path: '/admin/dashboard',
-                element: <AdminDashboard />
-            },
-            // {
-            //     path: '/admin/exams',
-            //     element: <ExamsPage />
-            // },
-            // {
-            //     path: '/admin/majors',
-            //     element: <MajorsPage />
-            // },
 
         ]
     }, {

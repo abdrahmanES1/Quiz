@@ -1,5 +1,4 @@
-
-import { Box, Image, Badge, } from "@chakra-ui/react"
+import { Box, Badge } from "@chakra-ui/react"
 import { Link } from "react-router-dom"
 function ExamCard({ _id, name, description, deadline }) {
 
@@ -35,8 +34,7 @@ function ExamCard({ _id, name, description, deadline }) {
                             Deadline
                         </Badge>
                         <Box as='span' ml='2' color='gray.600' fontSize='sm'>
-                            {deadline ?? "Now"}
-
+                            {new Date(deadline).toLocaleString()}
                         </Box>
                     </Box>
                 </Box>
