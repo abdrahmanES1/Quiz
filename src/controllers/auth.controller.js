@@ -1,16 +1,17 @@
 const asyncHandler = require('express-async-handler');
 const User = require('../models/users.model');
 const BadRequestError = require('../../Errors/BadRequestError');
+const HttpError = require('../../Errors/HttpError');
 const bcrypt = require('bcrypt');
 
 const register = asyncHandler(async (req, res, next) => {
-    const { email, password, firstname, lastname, role } = req.body;
+    const { email, password, firstname, lastname, role, major } = req.body;
 
     if (await User.findOne({ email })) {
         return next(new HttpError("Email Already Exist", 403));
     }
 
-    const user = await User.create({ email, password, firstname, lastname, role })
+    const user = await User.create({ email, password, firstname, lastname, role, major })
 
     sendTokenResponse(user, 200, res);
 })

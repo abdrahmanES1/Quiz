@@ -1,8 +1,6 @@
 import { useParams } from 'react-router'
-import { Button, Skeleton, Box, Heading, Table, TableCaption, Thead, Tr, Th, Tbody, Td, TableContainer, Tfoot } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
-import { FaEye } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
+import {  Skeleton, Box, Heading, Table, TableCaption, Thead, Tr, Th, Tbody, Td, TableContainer, Tfoot } from '@chakra-ui/react';
+
 import  useExamResults  from '../hooks/exams/useExamResults'
 const ExamResultsPage = () => {
     const { id } = useParams();

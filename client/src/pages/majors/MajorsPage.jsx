@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import { Skeleton, Box, Heading, Table, TableCaption, Thead, Tr, Th, Tbody, Td, TableContainer, Tfoot, Button, HStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import { FaEye } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
+import { InfoIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { useDisclosure } from '@chakra-ui/react';
 import AddMajorModal from '../../components/modals/AddMajorModal';
 import { useMajors } from '../../hooks/majors';
-import { MdEdit } from "react-icons/md";
 import DeleteMajorModal from '../../components/modals/DeleteMajorModel';
 import EditeMajorModal from '../../components/modals/EditeMajorModal';
-import useMajorStore from '../../features/majors/useMajorStore';
-//TODO : migrate to @chakraui/icons
+
 const MajorsPage = () => {
     const { majors, isLoading } = useMajors()
     // const majors = useMajorStore(state => state.majors)
@@ -57,15 +54,15 @@ const MajorsPage = () => {
                                     <Td>{major?.name}</Td>
                                     <Td >
                                         <Button size='sm' colorScheme="blue" marginEnd={2} as={Link} to={`/admin/majors/${major._id}`}>
-                                            <FaEye />
+                                            <InfoIcon />
                                         </Button>
 
                                         <Button size='sm' marginEnd={2} colorScheme="green" onClick={() => handleIdChange(major._id, "edit")} >
-                                            <MdEdit />
+                                            <EditIcon />
                                         </Button>
 
                                         <Button size='sm' colorScheme="red" onClick={() => handleIdChange(major._id, "delete")}>
-                                            <MdDelete />
+                                            <DeleteIcon />
                                         </Button>
 
                                     </Td>

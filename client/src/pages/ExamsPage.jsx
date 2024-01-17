@@ -1,9 +1,8 @@
 import React from 'react';
 import { Button, Skeleton, Box, Heading, Table, TableCaption, Thead, Tr, Th, Tbody, Td, TableContainer, Tfoot } from '@chakra-ui/react';
-import {useExams} from '../hooks/exams/index';
+import { useExams } from '../hooks/exams/index';
 import { Link } from 'react-router-dom';
-import { FaEye } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
+import { InfoIcon, DeleteIcon } from "@chakra-ui/icons";
 
 const ExamsPage = () => {
     const { exams, isLoading } = useExams();
@@ -40,10 +39,10 @@ const ExamsPage = () => {
                                     <Td>{exam?.description}</Td>
                                     <Td >
                                         <Button size='sm' colorScheme="blue" marginEnd={2} as={Link} to={`/admin/exams/${exam._id}`}>
-                                            <FaEye />
+                                            <InfoIcon />
                                         </Button>
                                         <Button size='sm' colorScheme="red" as={Link} >
-                                            <MdDelete />
+                                            <DeleteIcon />
                                         </Button>
                                     </Td>
                                 </Tr>

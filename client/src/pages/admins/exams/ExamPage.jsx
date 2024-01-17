@@ -40,7 +40,6 @@ function ExamPage() {
                         show Results
                     </Button>
                 </Box>
-                {/* TODO: add Link to exam results */}
             </HStack>
 
 
