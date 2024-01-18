@@ -1,2 +1,2 @@
-web: node --env-file=.env --watch index.js
+web: node --watch index.js
 
