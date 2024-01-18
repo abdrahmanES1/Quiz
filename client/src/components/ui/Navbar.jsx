@@ -68,13 +68,13 @@ const Navbar = () => {
 
                                 {isAuthenticated ?
                                     <Link
-                                        to={["ADMIN", "SUPER_ADMIN", "TEAHCER"].includes(userRole)
+                                        to={["ADMIN", "SUPER_ADMIN", "TEACHER"].includes(userRole)
                                             ? "/admin/dashboard"
                                             : "/dashboard"
                                         }
                                         as={NavLink} color="white" _hover={{ textDecoration: 'none' }}>dashboard</Link>
                                     : null}
-                                {["ADMIN", "SUPER_ADMIN", "TEAHCER"].includes(userRole) ?
+                                {["ADMIN", "SUPER_ADMIN", "TEACHER"].includes(userRole) ?
                                     <>
                                         <Link as={NavLink} to="/admin/exams" color="white" _hover={{ textDecoration: 'none' }}>
                                             Exams
@@ -114,12 +114,12 @@ const Navbar = () => {
                     {(isMobile || isTablet) && (
                         <VStack spacing={4} align="start" mt={4}>
                             {isAuthenticated ? <Link
-                                to={["ADMIN", "SUPER_ADMIN", "ADMIN"].includes(userRole) ? "/admin/dashboard" : "/dashboard"}
+                                to={["ADMIN", "SUPER_ADMIN", "TEACHER"].includes(userRole) ? "/admin/dashboard" : "/dashboard"}
                                 as={NavLink} color="white" _hover={{ textDecoration: 'none' }}>dashboard</Link> : null}
                             <Link as={NavLink} to="/" color="white" _hover={{ textDecoration: 'none' }}>
                                 Home
                             </Link>
-                            {["ADMIN", "SUPER_ADMIN", "ADMIN"].includes(userRole) ?
+                            {["ADMIN", "SUPER_ADMIN", "TEACHER"].includes(userRole) ?
                                 <>
                                     <Link as={NavLink} to="/admin/exams" color="white" _hover={{ textDecoration: 'none' }}>
                                         Exams
