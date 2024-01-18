@@ -3,7 +3,6 @@ const createServer = require('./src/app.js')
 const usersRoute = require('./src/routes/users.route.js')
 const authRoute = require('./src/routes/auth.route.js')
 const majorsRoute = require('./src/routes/majors.route.js')
-const responsesRoute = require('./src/routes/responses.route.js')
 const questionsRoute = require('./src/routes/questions.route.js')
 const examsRoute = require('./src/routes/exams.route.js')
 const resultRoute = require("./src/routes/results.route.js")
@@ -14,7 +13,6 @@ const app = createServer();
 
 app.use("/api", authRoute);
 app.use("/api/users", usersRoute);
-app.use("/api/responses", responsesRoute);
 app.use("/api/questions", questionsRoute);
 app.use("/api/exams", examsRoute);
 app.use("/api/majors", majorsRoute);

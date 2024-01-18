@@ -3,9 +3,7 @@ const asyncHandler = require('express-async-handler');
 const Question = require('../models/questions.model');
 const NotFoundError = require("../../Errors/NotFoundError");
 const BadRequestError = require("../../Errors/BadRequestError");
-const Response = require("../models/responses.model")
 const { StatusCodes } = require('http-status-codes');
-const mongoose = require('mongoose');
 const Exam = require("../models/exams.model");
 
 

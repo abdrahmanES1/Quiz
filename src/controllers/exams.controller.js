@@ -54,11 +54,6 @@ const deleteExam = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
     const deletedExam = await Exam.findByIdAndDelete(id);
 
-    // await Question.deleteMany({"exam":id})
-    // for(const question of deleteExam.questions){
-    //     await Response.deleteMany({"question" : question._id});
-    // }
-
     res.status(StatusCodes.OK).json({
         success: true,
         message: 'Exam deleted successfully'
