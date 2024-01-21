@@ -42,6 +42,12 @@ UserSchema.methods.getSignedJwtToken = function () {
     });
 };
 
+UserSchema.methods.getRefreshJwtToken = function () {
+    return jwt.sign({ id: this._id, role: this.role }, process.env.REFRESH_SECRET_TOKEN, {
+        expiresIn: process.env.REFRESH_JWT_EXPIRE_IN
+    });
+};
+
 const User = model("User", UserSchema);
 
 module.exports = User;

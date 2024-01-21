@@ -10,7 +10,7 @@ const { StatusCodes } = require('http-status-codes');
 const getAllMajors = asyncHandler(async (req, res, next) => {
     const { populate, min, max } = req.query;
 
-    const majors = await Major.aggregate( [
+    const majors = await Major.aggregate([
         {
             $lookup: {
                 from: 'users',
@@ -28,7 +28,7 @@ const getAllMajors = asyncHandler(async (req, res, next) => {
             }
         },
         { $unset: 'users.password' }
-    
+
     ])
     // const majors = await Major.find();
     res.status(StatusCodes.OK).send({
@@ -42,9 +42,9 @@ const getMajor = asyncHandler(async (req, res, next) => {
 
     if (!isValidObjectId(id)) throw new HttpError("Invalid Id", 400)
 
-    const major = await Major.aggregate( [
-        { $match: { _id : new mongoose.Types.ObjectId(id)  } },
-        
+    const major = await Major.aggregate([
+        { $match: { _id: new mongoose.Types.ObjectId(id) } },
+
         {
             $lookup: {
                 from: 'exams',
@@ -52,7 +52,7 @@ const getMajor = asyncHandler(async (req, res, next) => {
                 foreignField: 'major',
                 as: 'exams'
             }
-        }    
+        }
     ])
     res.status(StatusCodes.OK).send({
         success: true,
@@ -97,7 +97,7 @@ const modifyMajor = asyncHandler(async (req, res, next) => {
 const createMajor = asyncHandler(async (req, res, next) => {
     const { name } = req.body;
 
-    const major = new Major({ name });
+    const major = new Major({ name, createdBy: req.user._id });
     await major.save();
 
     return res.status(StatusCodes.CREATED).send({
@@ -107,13 +107,13 @@ const createMajor = asyncHandler(async (req, res, next) => {
 });
 
 
-const getMajorUsers = asyncHandler(async (req,res,next) => {
+const getMajorUsers = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
 
     if (!isValidObjectId(id)) throw new HttpError("Invalid Id", 400);
 
-    const major = await Major.aggregate( [
-        { $match: { "_id" : new mongoose.Types.ObjectId(id) } },
+    const major = await Major.aggregate([
+        { $match: { "_id": new mongoose.Types.ObjectId(id) } },
         {
             $lookup: {
                 from: 'users',
@@ -122,7 +122,7 @@ const getMajorUsers = asyncHandler(async (req,res,next) => {
                 as: 'users'
             }
         },
-        
+
         { $unset: 'users.password' }
     ])
     if (!major || major.length === 0) {

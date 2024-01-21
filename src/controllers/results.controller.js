@@ -54,7 +54,7 @@ const modifyResult = asyncHandler(async (req, res, next) => {
 });
 
 const createResult = asyncHandler(async (req, res, next) => {
-    const { user, exam, grade, createdBy } = req.body;
+    const { user, exam, grade } = req.body;
 
 
     const resultIsExits = Result.findOne({ user, exam });
@@ -65,7 +65,7 @@ const createResult = asyncHandler(async (req, res, next) => {
         user,
         exam,
         grade,
-        createdBy
+        createdBy: req.user._id
     })
 
     await result.save();
