@@ -87,7 +87,8 @@ const addExam = asyncHandler(async (req, res, next) => {
         name: name,
         description: description,
         major: major,
-        deadline: deadline
+        deadline: deadline,
+        createdBy: req.user._id
     })
 
     await exam.save();

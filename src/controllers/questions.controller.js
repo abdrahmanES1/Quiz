@@ -75,7 +75,8 @@ const addQuestion = asyncHandler(async (req,res,next) => {
         name : name,
         description : description,
         exam : exam,
-        response
+        response,
+        createdBy: req.user._id
     })          
     
     await question.save();
