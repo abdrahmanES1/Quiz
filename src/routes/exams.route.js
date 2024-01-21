@@ -10,9 +10,9 @@ const route = Router();
 route.use(enableProtection)
 route.get('', getAllExams);
 route.get('/:id', getExam);
-route.post("", authorize([Roles.ADMIN, Roles.SUPER_ADMIN, Roles.TEACHER]), addExam);
-route.put('/:id', authorize([Roles.ADMIN, Roles.SUPER_ADMIN, Roles.TEACHER]), modifyExam);
-route.delete('/:id', authorize([Roles.ADMIN, Roles.SUPER_ADMIN, Roles.TEACHER]), deleteExam);
+route.post("", authorize(Roles.ADMIN, Roles.SUPER_ADMIN, Roles.TEACHER), addExam);
+route.put('/:id', authorize(Roles.ADMIN, Roles.SUPER_ADMIN, Roles.TEACHER), modifyExam);
+route.delete('/:id', authorize(Roles.ADMIN, Roles.SUPER_ADMIN, Roles.TEACHER), deleteExam);
 
 route.get('/:id/results', getAllResultsForExam);
 module.exports = route;
