@@ -57,7 +57,7 @@ const createResult = asyncHandler(async (req, res, next) => {
     const { user, exam, grade } = req.body;
 
 
-    const resultIsExits = Result.findOne({ user, exam });
+    const resultIsExits = await Result.findOne({ user, exam });
     if (resultIsExits) {
         return next(new BadRequestError("you've already pass this exam"))
     }
