@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useRef} from 'react';
 import { Box, Button, Center, Checkbox, Container, FormControl, FormLabel, Heading, HStack, Input, Stack, Text } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useAuthStore } from '../../features/auth/authStore';
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 
 const Login = () => {
@@ -12,7 +13,8 @@ const Login = () => {
     const error = useAuthStore(state => state.error);
     const isLoading = useAuthStore(state => state.isLoading);
     const navigate = useNavigate();
-
+    const [token, setToken] = useState(null);
+    const captchaRef = useRef(null);
 
     const initialValues = {
         email: '',
@@ -26,6 +28,11 @@ const Login = () => {
     });
 
     const handleSubmit = async (values) => {
+
+        if (!token) {
+            return captchaRef.current.execute();
+        }
+        
         const res = await login(values.email, values.password);
         if (res && isAuthenticated) {
             res.user.role === "STUDENT" ? navigate('/dashboard') : navigate('/admin/exams')
@@ -138,7 +145,13 @@ const Login = () => {
                                         Forgot password?
                                     </Button>
                                 </HStack>
-                                <Stack spacing="6">
+
+                                <Stack spacing="6" alignItems="stretch">
+                                    <HCaptcha
+                                        sitekey={process.env.REACT_APP_HCAPTCHA_SITE_KEY}
+                                        onVerify={setToken}
+                                        ref={captchaRef}
+                                    />
                                     <Button type="submit" isLoading={isLoading}>Sign in</Button>
                                 </Stack>
                             </Form>
