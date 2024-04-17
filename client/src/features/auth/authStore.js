@@ -74,12 +74,11 @@ export const useAuthStore = create(devtools(persist((set, get) => ({
     },
     updateAcccesToken: async (accessToken) => {
         set({ token: accessToken })
-
     }
 }),
     {
         name: 'auth', // name of the item in the storage (must be unique)
-        storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
+        storage: createJSONStorage(() => sessionStorage), // (optional) by default, 'localStorage' is used
     })))
 
 // Action creators are generated for each case reducer function
