@@ -10,15 +10,17 @@ jobs:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-      - working-directory: ./client
-      - name: Checkout repository
+      
+      - name: Checkout repository 
         uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '21'
+          
       - name: Install dependencies
+        working-directory: ./client
         run: npm install
 
 #      - name: Run the tests
