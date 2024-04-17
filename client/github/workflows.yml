@@ -1,0 +1,27 @@
+name: "Build EsteQuiz App Frontend"
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  if_merged:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '21'
+      - name: Install dependencies
+        run: npm install
+
+#      - name: Run the tests
+#        run: npm test
+
+      - name: Build
+        run: npm run build

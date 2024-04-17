@@ -8,7 +8,7 @@ const instance = axios.create({
 instance.interceptors.response.use((response) => {
     return response
 }, async function (error) {
-    const auth = JSON.parse(localStorage.getItem('auth'))
+    const auth = JSON.parse(sessionStorage.getItem('auth'))
     let refreshToken = auth.state.refreshToken;
     const originalRequest = error.config;
     if (error.config.url !== "/refreshToken" && error.response.status === 401 && !originalRequest._retry) {
@@ -19,7 +19,8 @@ instance.interceptors.response.use((response) => {
 
             await instance.post('/refreshToken').then((response) => {
                 let newAuth = { ...auth, state: { ...auth.state, token: response.data.accessToken } }
-                localStorage.setItem("auth", JSON.stringify(newAuth))
+
+                sessionStorage.setItem("auth", JSON.stringify(newAuth))
                 originalRequest.headers['Authorization'] = `Bearer ${response?.data.accessToken}`;
                 instance.defaults.headers.common['Authorization'] = `Bearer ${response?.data.accessToken}`;
             }).catch((err) => {
