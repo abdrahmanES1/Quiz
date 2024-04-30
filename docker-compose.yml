@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:5.0.2
+    restart: unless-stopped
+    env_file: ./.env
+
+    volumes:
+      - db:/data/db
+    networks:
+      - backend
+  
+  api:
+    depends_on:
+      - mongodb
+    build: ./
+    restart: unless-stopped
+    env_file: ./.env
+    networks:
+      - backend
+      - frontend
+
+  ui:
+    depends_on:
+      - api
+    build:
+      context: ./client
+    networks:
+      - frontend  
+
+volumes: 
+  db:
+
+networks:
+  backend:
+  frontend:

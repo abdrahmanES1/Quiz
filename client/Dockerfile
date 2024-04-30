@@ -3,9 +3,9 @@ FROM node:21 as build-stage
 
 WORKDIR /project/client
 COPY package.json .
-RUN npm install
 COPY . .
-
+RUN npm install
+ENV NODE_OPTIONS=--max_old_space_size=2048
 
 
 RUN npm run build
@@ -13,7 +13,7 @@ RUN npm run build
 # Stage 2
 FROM nginx:1.17.0-alpine
 
-COPY --from=build-stage /ui/build /usr/share/nginx/html
-EXPOSE $REACT_DOCKER_PORT
+COPY --from=build-stage /project/client/build /usr/share/nginx/html
+EXPOSE 3000
 
 CMD nginx -g 'daemon off;'
