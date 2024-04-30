@@ -67,3 +67,11 @@ Once you have installed the dependencies, you can start the server using the fol
 
 ```bash
 npm run dev
+
+## Default User Account
+
+1. **User Details**
+   - **First Name**: Mark
+   - **Last Name**: Test
+   - **Email**: m.test@gmail.com
+   - **Password**: m.test@2024
